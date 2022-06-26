@@ -53,12 +53,10 @@
         <dependency>
             <groupId>com.tscredit</groupId>
             <artifactId>origin-service-user-client</artifactId>
-            <version>${tscredit.project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.tscredit</groupId>
             <artifactId>origin-service-extension-client</artifactId>
-            <version>${tscredit.project.version}</version>
         </dependency>
 
 

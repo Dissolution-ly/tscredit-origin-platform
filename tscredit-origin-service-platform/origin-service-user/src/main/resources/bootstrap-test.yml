@@ -1,7 +1,0 @@
-spring:
-  profiles: test
-  nacos:
-    addr: @nacos.addr@
-    config:
-      prefix: @nacos.config.prefix@
-      group: @nacos.config.group@

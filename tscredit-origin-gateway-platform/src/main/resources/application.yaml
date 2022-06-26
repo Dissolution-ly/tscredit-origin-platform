@@ -40,13 +40,13 @@ spring:
             maxAge: 360000 # 这次跨域检测的有效期
       routes:
         - id: uaa
-          uri: lb://origin-uaa
+          uri: lb://tscredit-origin-uaa-platform
           predicates:
             - Path=/origin-uaa/**
           filters:
             - StripPrefix=1
         - id: uaa-oauth2
-          uri: lb://origin-uaa
+          uri: lb://tscredit-origin-uaa-platform
           predicates:
             - Path=/oauth/token,/oauth/authorize,/login
           filters:
