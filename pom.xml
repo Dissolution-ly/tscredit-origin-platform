@@ -79,6 +79,22 @@
     </repositories>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>**/*.jks</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.jks</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -100,6 +116,19 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>me</id>
+            <properties>
+                <spring.profiles.active>me</spring.profiles.active>
+                <nacos.addr>152.136.113.186:8848</nacos.addr>
+                <nacos.config.prefix>origin-config</nacos.config.prefix>
+                <nacos.config.group>ORIGIN_GROUP</nacos.config.group>
+                <!--                <docker.harbor.addr>172.16.20.175</docker.harbor.addr>-->
+                <!--                <docker.harbor.project>tscredit</docker.harbor.project>-->
+                <!--                <docker.harbor.username>robot$tscredit</docker.harbor.username>-->
+                <!--                <docker.harbor.password>Jqazyv7vvZiL6TXuNcv7TrZeRdL8U9n3</docker.harbor.password>-->
+            </properties>
+        </profile>
         <profile>
             <activation>
                 <!--默认为dev环境打包方式-->

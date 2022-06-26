@@ -1,17 +1,22 @@
 server:
   port: 8010
 spring:
-  application:
-    name: origin-uaa
   profiles:
-    active: dev
+    active: '@spring.profiles.active@'
+  application:
+    name: '@artifactId@'
   cloud:
     nacos:
       discovery:
         cluster-name: AA
-        server-addr: 152.136.113.186:8848
+        server-addr: @nacos.addr@
       config:
-        server-addr: 152.136.113.186:8848
-        file-extension: yaml
-        group: ORIGIN_GROUP
         enabled: true
+        file-extension: yaml
+        server-addr: @nacos.addr@
+        group: @nacos.config.group@
+#        prefix: @nacos.config.prefix@
+        sharedConfigs:
+          - dataId: common.yaml
+            group: DEFAULT_GROUP
+            refresh: false
