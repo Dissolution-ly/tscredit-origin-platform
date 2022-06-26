@@ -1,0 +1,36 @@
+user:
+  defaultPwd: root@1
+
+
+spring:
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: default_tx_group
+
+seata:
+  enabled: true
+  application-id: seata-server
+  tx-service-group: default_tx_group
+  service:
+    vgroup-mapping:
+      default_tx_group: default
+  # 一定要是false
+  enable-auto-data-source-proxy: false
+  config:
+    type: nacos
+    nacos:
+      serverAddr: 152.136.113.186:8848
+      #      namespace:
+      group: SEATA_GROUP
+      userName: "nacos"
+      password: "nacos"
+      dataId: seataServer.properties
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 152.136.113.186:8848
+#      namespace:
+      userName: "nacos"
+      password: "nacos"

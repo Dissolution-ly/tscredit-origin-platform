@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tscredit.origin.user.mapper.UserMapper">
+
+    <sql id="UserInfo_Select">
+        select urm_user.fu_id                            AS id,
+               urm_user.fu_name                          AS `name`,
+               urm_user.fu_loginname                     AS loginname,
+               urm_user.fu_password                      AS `password`,
+               urm_user.fu_cnname                        AS cnname,
+               urm_user.fu_mobile                        AS mobile,
+               urm_user.fu_ent_name                      AS entName,
+               urm_user.fu_opentime                      AS opentime,
+               urm_user.fu_expiredtime                   AS expiredtime,
+               urm_user.fu_userstatus                    AS userstatus,
+               GROUP_CONCAT(DISTINCT urm_role.id)        AS roleIds,
+               GROUP_CONCAT(DISTINCT urm_role.role_key)  AS roleKey,
+               GROUP_CONCAT(DISTINCT urm_role.role_name) AS roleName
+    </sql>
+
+
+    <select id="getUserPage" resultType="com.tscredit.origin.user.entity.UserInfo">
+        <include refid="UserInfo_Select"/>
+        from urm_user
+        INNER JOIN urm_user_role ON urm_user.fu_id = urm_user_role.user_id AND urm_user_role.status = 1
+        LEFT JOIN urm_role ON urm_user_role.role_id = urm_role.id AND urm_role.status = 1
+        ${ew.customSqlSegment}
+    </select>
+
+    <select id="queryUserInfo" resultType="com.tscredit.origin.user.entity.UserInfo">
+        <include refid="UserInfo_Select"/>
+        from urm_user
+        INNER JOIN urm_user_role ON urm_user.fu_id = urm_user_role.user_id AND urm_user_role.status = 1
+        LEFT JOIN urm_role ON urm_user_role.role_id = urm_role.id AND urm_role.status = 1
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

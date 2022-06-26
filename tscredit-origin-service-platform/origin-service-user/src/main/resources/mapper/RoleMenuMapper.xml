@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tscredit.origin.user.mapper.RoleMenuMapper">
+
+
+    <select id="selectRoleMenu" resultType="java.lang.String">
+
+        SELECT urm_menu.${type}
+        FROM urm_role_menu
+                 LEFT JOIN urm_menu ON urm_role_menu.menu_id = urm_menu.id
+        WHERE urm_menu.status = '1'
+        and role_id = #{roleCode}
+
+    </select>
+
+    <select id="selectRoleMenuList" resultType="java.util.Map">
+        SELECT urm_menu.url AS url,urm_menu.name AS name,urm_menu.sort AS sort
+        FROM urm_role_menu
+                 LEFT JOIN urm_menu ON urm_role_menu.menu_id = urm_menu.id
+        WHERE urm_menu.status = '1'
+        and role_id = #{roleCode}
+    </select>
+</mapper>

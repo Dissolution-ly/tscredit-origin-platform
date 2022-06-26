@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <groupId>com.tscredit</groupId>
+    <artifactId>tscredit-origin-platform</artifactId>
+    <version>1.0.0</version>
+    <name>${project.artifactId}</name>
+
+    <modules>
+        <module>tscredit-origin-uaa-platform</module>
+        <module>tscredit-origin-gateway-platform</module>
+        <module>tscredit-origin-client-platform</module>
+        <module>tscredit-origin-service-platform</module>
+    </modules>
+
+    <properties>
+        <!-- jdk版本1.8 -->
+        <java.version>1.8</java.version>
+        <!-- 项目统一字符集编码UTF-8 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- maven 编译配置 -->
+        <maven.plugin.version>3.8.1</maven.plugin.version>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+
+        <spring.boot.version>2.4.0</spring.boot.version>
+        <!-- 内部模块版本 -->
+        <tscredit.platform.version>1.0.0.RELEASE</tscredit.platform.version>
+        <tscredit.project.version>1.0.0</tscredit.project.version>
+    </properties>
+
+    <dependencies>
+        <!-- 内部模块 -->
+        <dependency>
+            <groupId>com.tscredit</groupId>
+            <artifactId>tsinterface-spring-boot-starter</artifactId>
+            <version>1.1.3</version>
+        </dependency>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <!-- hutool -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.tscredit</groupId>
+                <artifactId>tscredit-platform-bom</artifactId>
+                <version>${tscredit.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <repositories>
+        <!-- swagger Resources -->
+        <repository>
+            <id>jcenter-snapshots</id>
+            <name>jcenter</name>
+            <url>http://oss.jfrog.org/simple/oss-snapshot-local/io/springfox/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <configuration>
+                    <fork>true</fork>
+                    <finalName>${project.build.finalName}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <activation>
+                <!--默认为dev环境打包方式-->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <id>dev</id>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+                <nacos.addr>152.136.113.186:8848</nacos.addr>
+                <nacos.config.prefix>origin-config</nacos.config.prefix>
+                <nacos.config.group>ORIGIN_GROUP</nacos.config.group>
+<!--                <docker.harbor.addr>172.16.20.175</docker.harbor.addr>-->
+<!--                <docker.harbor.project>tscredit</docker.harbor.project>-->
+<!--                <docker.harbor.username>robot$tscredit</docker.harbor.username>-->
+<!--                <docker.harbor.password>Jqazyv7vvZiL6TXuNcv7TrZeRdL8U9n3</docker.harbor.password>-->
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.profiles.active>test</spring.profiles.active>
+                <nacos.addr>127.0.0.1:8848</nacos.addr>
+                <nacos.config.prefix>origin-cloud-config</nacos.config.prefix>
+                <nacos.config.group>ORIGIN_CLOUD</nacos.config.group>
+<!--                <docker.harbor.addr>172.16.20.175</docker.harbor.addr>-->
+<!--                <docker.harbor.project>tscredit</docker.harbor.project>-->
+<!--                <docker.harbor.username>robot$tscredit</docker.harbor.username>-->
+<!--                <docker.harbor.password>Jqazyv7vvZiL6TXuNcv7TrZeRdL8U9n3</docker.harbor.password>-->
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+                <nacos.addr>127.0.0.1:8848</nacos.addr>
+                <nacos.config.prefix>origin-cloud-config</nacos.config.prefix>
+                <nacos.config.group>ORIGIN_CLOUD</nacos.config.group>
+<!--                <docker.harbor.addr>172.16.20.175</docker.harbor.addr>-->
+<!--                <docker.harbor.project>tscredit</docker.harbor.project>-->
+<!--                <docker.harbor.username>robot$tscredit</docker.harbor.username>-->
+<!--                <docker.harbor.password>Jqazyv7vvZiL6TXuNcv7TrZeRdL8U9n3</docker.harbor.password>-->
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

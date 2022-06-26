@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tscredit.origin.user.mapper.UserAuthorityMapper">
+
+    <!-- 获取指定用户的全部权限 -->
+    <select id="userAuthority" resultType="java.util.Map">
+        SELECT urm_authority.id                     AS authorityId,
+               urm_user_authority.authority_content AS authorityContent
+        FROM urm_authority
+                 LEFT JOIN (select * from urm_user_authority where urm_user_authority.user_id = #{userId}) urm_user_authority
+                           ON urm_authority.id = urm_user_authority.authority_id
+        ORDER BY urm_authority.sort
+    </select>
+
+    <!-- 查询已知权限类型 -->
+    <select id="selectAllAuthority" resultType="java.lang.String">
+        select id from urm_authority
+    </select>
+
+    <select id="authority" resultType="java.lang.String">
+        select authority_content
+        from urm_user_authority
+        WHERE user_id = #{userId}
+          and authority_id = #{authorityId}
+    </select>
+
+
+
+
+</mapper>

@@ -1,0 +1,93 @@
+spring:
+  main:
+    # 允许自己的 Bean 覆盖框架的 Bean (指定客户端存储位置为数据库时需要自定义 ClientDetailsService)
+    allow-bean-definition-overriding: true
+
+#server:
+#  servlet:
+#    encoding:
+#      charset: UTF-8
+#spring:
+#  jackson:
+#    date-format: yyyy-MM-dd
+#    time-zone: Asia/Shanghai
+#  mvc:
+#    date-format: yyyy-MM-dd
+#  servlet:
+#    multipart:
+#      # 文件上传 - 单个最大值
+#      max-file-size: 2MB
+#      # 文件上传 - 单请求(多个文件总和)最大值
+#      max-request-size: 2MB
+#  datasource:
+#    url: jdbc:mysql://152.136.113.186:3306/origin_uaa?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+#    username: root
+#    password: root
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  redis:
+#    host: 152.136.113.186
+#    port: 6379
+#    database: 0
+#    jedis:
+#      pool:
+#        max-active: 200
+#        max-wait: 3000
+#        max-idle: 20
+#        min-idle: 2
+#        timeout: 5000
+#  main:
+#    # 允许自己的 Bean 覆盖框架的 Bean (指定客户端存储位置为数据库时需要自定义 ClientDetailsService)
+#    allow-bean-definition-overriding: true
+#origin-uaa:
+#  ribbon:
+#    # 负载均衡规则：NacosRule(同集群优先)
+#    NFLoadBalancerRuleClassName: com.alibaba.cloud.nacos.ribbon.NacosRule
+#
+#
+#mybatis-plus:
+#  global-config:
+#    call-setters-on-nulls: true
+#    db-config:
+#      logic-delete-field: status
+#      logic-delete-value: 0
+#      logic-not-delete-value: 1
+#
+#ts:
+#  interface:
+#    name:
+#     getInputtipsInfo: getInputtipsInfo
+#    cache:
+#    keys:
+#      ts:
+#        url: http://api.wanvdata.com/service
+#        keyPath: D:\\InsertBag\\origin\\
+#        uid: b79f638659fc38b6c142009e9ce3c1a4
+#object:
+#  debug: true
+#  private:
+#    key:
+#
+#tenant:
+#  enable: false
+#data-permission:
+#  annotation-enable: false
+oauth-list:
+  whiteUrls:
+    - "/origin-uaa/oauth/public_key"
+    # 下面的配置，想办法搞掉，压根很不需要
+    # 鉴权
+    - "/actuator/**"
+    - "/oauth/token"
+    - "/oauth/authorize"
+    - "/login"
+    - "/loginBefor/**"
+    # swagger
+    - "/doc.html"
+    - "/favicon.ico"
+    - "/webjars/**"
+    - "/swagger-resources/**"
+    - "/*/v2/api-docs"
+    # 静态资源
+    - "/images/**"
+    - "/js/**"
+    - "/error*/**"

@@ -1,0 +1,17 @@
+server:
+  port: 8010
+spring:
+  application:
+    name: origin-uaa
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        cluster-name: AA
+        server-addr: 152.136.113.186:8848
+      config:
+        server-addr: 152.136.113.186:8848
+        file-extension: yaml
+        group: ORIGIN_GROUP
+        enabled: true

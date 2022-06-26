@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>com.tscredit</groupId>
+        <artifactId>tscredit-origin-platform</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>tscredit-origin-service-platform</artifactId>
+    <name>${project.artifactId}</name>
+
+    <modules>
+        <module>origin-service-user</module>
+    </modules>
+
+    <dependencies>
+        <!-- Spring Boot自定义及扩展 -->
+        <dependency>
+            <groupId>com.tscredit</groupId>
+            <artifactId>tscredit-platform-boot</artifactId>
+        </dependency>
+        <!-- Spring Cloud自定义及扩展 -->
+        <dependency>
+            <groupId>com.tscredit</groupId>
+            <artifactId>tscredit-platform-cloud</artifactId>
+        </dependency>
+        <!-- 数据库驱动及连接池 -->
+        <dependency>
+            <groupId>com.tscredit</groupId>
+            <artifactId>tscredit-platform-db</artifactId>
+        </dependency>
+        <!-- mybatis-plus -->
+        <dependency>
+            <groupId>com.tscredit</groupId>
+            <artifactId>tscredit-platform-mybatis</artifactId>
+        </dependency>
+        <!-- swagger2-knife4j -->
+        <dependency>
+            <groupId>com.tscredit</groupId>
+            <artifactId>tscredit-platform-swagger</artifactId>
+        </dependency>
+        <!-- cache自定义扩展 -->
+        <dependency>
+            <groupId>com.tscredit</groupId>
+            <artifactId>tscredit-platform-cache</artifactId>
+        </dependency>
+    </dependencies>
+</project>

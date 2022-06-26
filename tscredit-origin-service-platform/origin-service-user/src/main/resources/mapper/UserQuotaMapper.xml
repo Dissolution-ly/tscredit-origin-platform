@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tscredit.origin.user.mapper.UserQuotaMapper">
+
+    <!-- 根据用户ID获取，该用户的额度信息 -->
+    <select id="getByUserId" resultType="java.util.Map">
+        SELECT urm_user_quota.id                                                                           AS id,
+               urm_quota.id                                                                                AS quotaId,
+               urm_quota.name                                                                              AS quotaName,
+               (CASE
+                    WHEN urm_user_quota.quota_total IS NULL THEN urm_quota.default_value
+                    ELSE urm_user_quota.quota_total END)                                                   AS quotaTotal,
+               (CASE WHEN urm_user_quota.quota_use IS NULL THEN '0' ELSE urm_user_quota.quota_use END)     AS quotaUse
+        FROM urm_quota
+                 LEFT JOIN urm_user_quota ON urm_quota.id = urm_user_quota.quota_id
+            AND urm_user_quota.user_id = #{userId}
+        ORDER BY urm_quota.sort
+    </select>
+
+    <!-- 修改用户某项额度数 -->
+    <update id="updateQuota">
+        update urm_user_quota
+        set quota_use = #{use}
+        where user_id = #{userId}
+          and quota_id = #{quotaId}
+    </update>
+
+    <!-- 将用户额度修改为 和 另一个用户或角色 相同 -->
+    <insert id="setQuotaByRole">
+        INSERT INTO urm_user_quota(quota_id, quota_total, quota_use, user_id)
+        select quota_id, quota_total, quota_use, ${userId} AS user_id
+        from urm_user_quota
+        where user_id = #{sourceId}
+    </insert>
+
+    <!-- 获取天级额度 -->
+    <select id="getDayId" resultType="java.lang.String">
+        select id
+        from urm_quota
+        where type = 'day'
+    </select>
+
+    <!-- 获取额度ID集合 -->
+    <select id="getQuotaIds" resultType="java.lang.String">
+        select id
+        from urm_quota
+    </select>
+
+
+    <select id="authority" resultType="java.util.Map">
+        SELECT t_authority.id                     AS authorityId,
+               t_user_authority.authority_content AS authorityContent
+        FROM t_authority
+                 LEFT JOIN t_user_authority
+                           ON t_authority.id = t_user_authority.authority_id
+                               and t_user_authority.user_id = #{userId} and t_authority.`status` = '1'
+        ORDER BY t_authority.sort
+    </select>
+
+    <!-- 根据用户ID 删除用户所有权限 (删除用户操作联动) -->
+    <delete id="deleteAuthorityByUserId">
+        delete
+        from t_user_authority ${ew.customSqlSegment}
+    </delete>
+</mapper>
