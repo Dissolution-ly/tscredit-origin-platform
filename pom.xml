@@ -10,7 +10,7 @@
     <name>${project.artifactId}</name>
 
     <modules>
-        <module>tscredit-origin-uaa-platform</module>
+        <module>tscredit-origin-oauth-platform</module>
         <module>tscredit-origin-gateway-platform</module>
         <module>tscredit-origin-client-platform</module>
         <module>tscredit-origin-service-platform</module>

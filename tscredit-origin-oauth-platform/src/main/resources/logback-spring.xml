@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false">
     <!-- 项目名称 -->
-    <property name="PROJECT_NAME" value="user" />
+    <property name="PROJECT_NAME" value="oauth" />
 
 
     <logger name="org.apache" level="ERROR" />

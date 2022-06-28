@@ -31,14 +31,14 @@ spring:
 #            allowCredentials: true # 是否允许携带 cookie
             maxAge: 360000 # 这次跨域检测的有效期
       routes:
-        - id: uaa
-          uri: lb://tscredit-origin-uaa-platform
+        - id: oauth
+          uri: lb://tscredit-origin-oauth-platform
           predicates:
-            - Path=/origin-uaa/**
+            - Path=/origin-oauth/**
           filters:
             - StripPrefix=1
-        - id: uaa-oauth2
-          uri: lb://tscredit-origin-uaa-platform
+        - id: oauth2
+          uri: lb://tscredit-origin-oauth-platform
           predicates:
             - Path=/oauth/token,/oauth/authorize,/login
           filters:
@@ -65,15 +65,9 @@ spring:
         max-idle: 20
         min-idle: 2
         timeout: 5000
-gateway:
-  ribbon:
-    # 负载均衡规则：NacosRule(同集群优先)
-    NFLoadBalancerRuleClassName: com.alibaba.cloud.nacos.ribbon.NacosRule
 logging:
   level:
     org.springframework:cloud.gateway: debug
-
-
 
 # 多租户配置
 tenant:
@@ -108,9 +102,3 @@ oauth-list:
     - "/images/**"
     - "/js/**"
     - "/error*/**"
-
-
-
-origin:
-  project:
-    names: origin
