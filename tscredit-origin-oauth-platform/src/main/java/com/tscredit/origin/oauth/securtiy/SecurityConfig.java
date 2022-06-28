@@ -71,7 +71,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         DelegatingPasswordEncoder encoder = new DelegatingPasswordEncoder("bcrypt", encoders);
         encoder.setDefaultPasswordEncoderForMatches(new BCryptPasswordEncoder());
         return encoder;
-
     }
 
 
@@ -92,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     /**
-     *  如果不配置SpringBoot会自动配置一个AuthenticationManager,覆盖掉内存中的用户
+     * 如果不配置SpringBoot会自动配置一个AuthenticationManager,覆盖掉内存中的用户
      */
     @Override
     @Bean
@@ -121,28 +120,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**"
     };
 
-    /**
-     * 配置 HTTP 请求：
-     * 不配置时,默认 /login GET访问登录页，POST提交登录数据
-     */
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic().and().csrf().disable().formLogin();
+        http.httpBasic().and().csrf().disable();
 
-//        http.authorizeRequests().anyRequest().permitAll()
-//                .and()
-//                .addFilterBefore(passwordAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-//                .formLogin().loginPage("/login**")
-//                .and()
-//                .logout().logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler)
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .rememberMe().rememberMeParameter("remember-me")
-//                .tokenValiditySeconds(1000)
-//
-//                .and()
-//                .csrf().disable()
-//                .cors().configurationSource(corsConfigurationSource());
+        http.authorizeRequests()
+                .antMatchers("/login").permitAll()
+                .anyRequest().authenticated();
     }
 }

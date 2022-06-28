@@ -21,14 +21,14 @@ import java.nio.charset.StandardCharsets;
  */
 @Component
 public class RestfulAccessDeniedHandler implements ServerAccessDeniedHandler {
-  @Override
-  public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException denied) {
-    ServerHttpResponse response = exchange.getResponse();
-    response.setStatusCode(HttpStatus.FORBIDDEN);
-    response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-    ActionMessage data = ActionMessage.error(ErrorMessage.USER_PERMISSIONS).data(denied.getMessage());
-    String body = JsonUtils.convertObject2JsonLogicException(data);
-    DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(StandardCharsets.UTF_8));
-    return response.writeWith(Mono.just(buffer));
-  }
+    @Override
+    public Mono<Void> handle(ServerWebExchange exchange, AccessDeniedException denied) {
+        ServerHttpResponse response = exchange.getResponse();
+        response.setStatusCode(HttpStatus.FORBIDDEN);
+        response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        ActionMessage data = ActionMessage.error(ErrorMessage.USER_PERMISSIONS).data(denied.getMessage());
+        String body = JsonUtils.convertObject2JsonLogicException(data);
+        DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(StandardCharsets.UTF_8));
+        return response.writeWith(Mono.just(buffer));
+    }
 }
