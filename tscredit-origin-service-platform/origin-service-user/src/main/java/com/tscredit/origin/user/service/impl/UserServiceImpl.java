@@ -117,6 +117,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Page<UserInfo> pageList(Page<UserInfo> page, QueryUserDTO user) {
         QueryWrapper<User> wrapper = getWrapper(user);
         wrapper.orderByDesc("urm_user.udt");
+        wrapper.groupBy("urm_user.fu_id");
         return userMapper.getUserPage(page, wrapper);
     }
 
@@ -303,7 +304,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public UserInfo queryUserInfo(QueryUserDTO queryUserDTO) {
-        UserInfo userInfo = userMapper.queryUserInfo(getWrapper(queryUserDTO));
+        QueryWrapper<User> wrapper = getWrapper(queryUserDTO);
+        wrapper.groupBy("urm_user.fu_id");
+        UserInfo userInfo = userMapper.queryUserInfo(wrapper);
 
         if (null == userInfo) {
             throw new BusinessException(ResultCodeEnum.INVALID_USERNAME.getMsg());
