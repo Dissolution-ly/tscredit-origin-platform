@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
 
-    <groupId>com.tscredit</groupId>
-    <artifactId>tscredit-origin-platform</artifactId>
+    <groupId>com.origin</groupId>
+    <artifactId>origin-cloud-platform</artifactId>
     <version>1.0.0</version>
     <name>${project.artifactId}</name>
 
@@ -97,6 +97,7 @@
         </resources>
         <pluginManagement>
             <plugins>
+                <!-- 能够将 Spring Boot应用打包为可执行的 jar 或 war 文件，然后以通常的方式运行 Spring Boot 应用 -->
                 <!-- 用于在编译（compile）阶段加入定制化参数，比如设置项目源码的jdk版本、编译的jdk版本，以及项目编码等 -->
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
