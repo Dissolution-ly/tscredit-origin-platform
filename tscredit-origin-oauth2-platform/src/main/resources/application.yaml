@@ -1,0 +1,32 @@
+spring:
+  main:
+    # 允许自己的 Bean 覆盖框架的 Bean (指定客户端存储位置为数据库时需要自定义 ClientDetailsService)
+    allow-bean-definition-overriding: true
+
+system:
+  maxTryTimes: 5
+  maxNonCaptchaTimes: 3
+captcha:
+  type: sliding
+
+oauth-list:
+  whiteUrls:
+    - "/origin-uaa/oauth/public_key"
+    # 下面的配置，想办法搞掉，压根很不需要
+    # 鉴权
+    - "/actuator/**"
+    - "/oauth/token"
+    - "/oauth/authorize"
+    - "/login"
+    - "/loginBefor/**"
+    # swagger
+    - "/doc.html"
+    - "/favicon.ico"
+    - "/webjars/**"
+    - "/swagger-resources/**"
+    - "/*/v2/api-docs"
+    # 静态资源
+    - "/images/**"
+    - "/js/**"
+    - "/error*/**"
+
