@@ -313,7 +313,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
 
-        // 将 roleIds ',' 分割为集合，用于 OAuth2 和 Gateway鉴权
+        // 将 roleIds ',' 分割为集合，用于 OAuth2 和 Gateway 鉴权
         String roleIds = userInfo.getRoleIds();
         if (!StringUtils.isEmpty(roleIds)) {
             String[] roleIdsArray = roleIds.split(",");

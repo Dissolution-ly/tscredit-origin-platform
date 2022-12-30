@@ -10,9 +10,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.annotation.ApplicationScope;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -22,6 +25,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @Api(tags = {"用户管理"}, value = "LoginAction")
+@Scope(value = "application")
 public class LoginAction {
 
     private final RoleResourceService roleResourceService;
