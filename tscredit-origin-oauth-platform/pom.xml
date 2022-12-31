@@ -5,8 +5,8 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>com.tscredit</groupId>
-        <artifactId>tscredit-origin-cloud-platform</artifactId>
+        <groupId>com.origin</groupId>
+        <artifactId>origin-cloud-platform</artifactId>
         <version>1.0.0</version>
     </parent>
 

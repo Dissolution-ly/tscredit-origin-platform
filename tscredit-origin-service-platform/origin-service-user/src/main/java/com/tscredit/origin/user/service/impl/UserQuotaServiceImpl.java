@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.tscredit.common.response.ErrorMessage;
 import com.tscredit.common.response.LogicException;
-import com.tscredit.origin.user.config.constant.RedisConstants;
+import com.tscredit.origin.user.constant.RedisConstants;
 import com.tscredit.origin.user.mapper.UserQuotaMapper;
 import com.tscredit.origin.user.entity.UserQuota;
 import com.tscredit.origin.user.service.UserQuotaService;

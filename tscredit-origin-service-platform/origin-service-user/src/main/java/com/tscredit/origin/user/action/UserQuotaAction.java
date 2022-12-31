@@ -6,7 +6,7 @@ import com.tscredit.common.response.ActionMessage;
 import com.tscredit.common.response.ErrorMessage;
 import com.tscredit.common.response.LogicException;
 import com.tscredit.common.validataed.Flag;
-import com.tscredit.origin.user.config.constant.RedisConstants;
+import com.tscredit.origin.user.constant.RedisConstants;
 import com.tscredit.origin.user.entity.UserQuota;
 import com.tscredit.origin.user.service.UserQuotaService;
 import com.tscredit.platform.redis.config.RedisUtil;

@@ -6,8 +6,8 @@
     <packaging>pom</packaging>
 
     <parent>
-        <groupId>com.tscredit</groupId>
-        <artifactId>tscredit-origin-cloud-platform</artifactId>
+        <groupId>com.origin</groupId>
+        <artifactId>origin-cloud-platform</artifactId>
         <version>1.0.0</version>
     </parent>
 
@@ -19,35 +19,28 @@
     </modules>
 
     <dependencies>
-        <!-- Spring Boot自定义及扩展 -->
+        <!-- aurora 扩展 -->
         <dependency>
-            <groupId>com.tscredit</groupId>
-            <artifactId>tscredit-platform-boot</artifactId>
+            <groupId>com.aurora</groupId>
+            <artifactId>platform-boot</artifactId>
         </dependency>
-        <!-- Spring Cloud自定义及扩展 -->
         <dependency>
-            <groupId>com.tscredit</groupId>
-            <artifactId>tscredit-platform-cloud</artifactId>
+            <groupId>com.aurora</groupId>
+            <artifactId>platform-cloud</artifactId>
         </dependency>
-        <!-- 数据库驱动及连接池 -->
         <dependency>
-            <groupId>com.tscredit</groupId>
-            <artifactId>tscredit-platform-db</artifactId>
+            <groupId>com.aurora</groupId>
+            <artifactId>platform-mybatis</artifactId>
         </dependency>
-        <!-- mybatis-plus -->
         <dependency>
-            <groupId>com.tscredit</groupId>
-            <artifactId>tscredit-platform-mybatis</artifactId>
+            <groupId>com.aurora</groupId>
+            <artifactId>platform-redis</artifactId>
         </dependency>
         <!-- swagger2-knife4j -->
         <dependency>
-            <groupId>com.tscredit</groupId>
-            <artifactId>tscredit-platform-swagger</artifactId>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-micro-spring-boot-starter</artifactId>
         </dependency>
-        <!-- cache自定义扩展 -->
-        <dependency>
-            <groupId>com.tscredit</groupId>
-            <artifactId>tscredit-platform-cache</artifactId>
-        </dependency>
+
     </dependencies>
 </project>
