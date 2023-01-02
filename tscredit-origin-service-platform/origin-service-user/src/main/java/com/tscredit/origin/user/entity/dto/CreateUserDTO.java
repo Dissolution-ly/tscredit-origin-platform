@@ -1,8 +1,8 @@
 
 package com.tscredit.origin.user.entity.dto;
 
-import com.tscredit.common.validataed.Flag;
-import com.tscredit.common.validataed.PassWord;
+import com.aurora.boot.validataed.Flag;
+import com.aurora.boot.validataed.PassWord;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -1,14 +1,14 @@
 package com.tscredit.origin.user.service.impl;
 
+import com.aurora.base.util.JsonUtils;
+import com.aurora.redis.config.RedisUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tscredit.common.util.JsonUtils;
 import com.tscredit.origin.user.mapper.UserAuthorityMapper;
 import com.tscredit.origin.user.entity.UserAuthority;
 import com.tscredit.origin.user.service.UserAuthorityService;
-import com.tscredit.platform.redis.config.RedisUtil;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Service;
 

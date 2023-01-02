@@ -1,7 +1,7 @@
 package com.tscredit.origin.user.action.feign;
 
+import com.aurora.base.entity.response.Result;
 import com.tscredit.origin.user.service.ResourceService;
-import com.tscredit.platform.base.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

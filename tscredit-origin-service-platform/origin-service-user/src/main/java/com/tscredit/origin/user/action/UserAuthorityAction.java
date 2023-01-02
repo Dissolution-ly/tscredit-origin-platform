@@ -1,10 +1,10 @@
 package com.tscredit.origin.user.action;
 
 
+import com.aurora.base.entity.response.ActionMessage;
+import com.aurora.base.util.JsonUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.Lists;
-import com.tscredit.common.response.ActionMessage;
-import com.tscredit.common.util.JsonUtils;
 import com.tscredit.origin.user.entity.UserAuthority;
 import com.tscredit.origin.user.service.UserAuthorityService;
 import io.swagger.annotations.Api;

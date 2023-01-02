@@ -1,9 +1,9 @@
 package com.tscredit.origin.user.action;
 
 
-import com.tscredit.common.response.ActionMessage;
-import com.tscredit.common.response.ErrorMessage;
-import com.tscredit.common.response.LogicException;
+import com.aurora.base.constant.ErrorMessage;
+import com.aurora.base.entity.response.ActionMessage;
+import com.aurora.base.exception.LogicException;
 import com.tscredit.tsinterfaces.access.HttpQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

@@ -1,16 +1,16 @@
 package com.tscredit.origin.user.service.impl;
 
+import com.aurora.base.constant.ErrorMessage;
+import com.aurora.base.exception.LogicException;
+import com.aurora.redis.config.RedisUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
-import com.tscredit.common.response.ErrorMessage;
-import com.tscredit.common.response.LogicException;
 import com.tscredit.origin.user.constant.RedisConstants;
 import com.tscredit.origin.user.mapper.UserQuotaMapper;
 import com.tscredit.origin.user.entity.UserQuota;
 import com.tscredit.origin.user.service.UserQuotaService;
-import com.tscredit.platform.redis.config.RedisUtil;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -98,7 +98,7 @@ public class UserQuotaServiceImpl extends ServiceImpl<UserQuotaMapper, UserQuota
                 }
             }
             if (userQuota == null) {
-                throw LogicException.errorMessage(ErrorMessage.REQ_PARAM_ERROR).setCode("6379").setErrorMsg("要获取的额度数据不存在");
+                throw LogicException.errorMessage("6379", "要获取的额度数据不存在");
             }
 
             // 将信息保存到 redis TODO 需要原子操作

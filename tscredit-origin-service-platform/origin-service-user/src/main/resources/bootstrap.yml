@@ -10,12 +10,16 @@ spring:
       discovery:
         cluster-name: AA
         server-addr: @nacos.addr@
+        namespace: @nacos.namespace@
       config:
         enabled: true
-        file-extension: yaml
         server-addr: @nacos.addr@
+        namespace: @nacos.namespace@
         group: @nacos.config.group@
+        file-extension: yaml
         sharedConfigs:
-          - dataId: common.yaml
-            group: DEFAULT_GROUP
+          - dataId: origin_common.yaml
+            group: ORIGIN_GROUP
             refresh: false
+          - dataId: common.yaml
+

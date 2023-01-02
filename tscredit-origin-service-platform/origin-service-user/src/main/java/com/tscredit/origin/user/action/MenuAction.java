@@ -1,6 +1,7 @@
 package com.tscredit.origin.user.action;
 
-import com.tscredit.common.response.ActionMessage;
+
+import com.aurora.base.entity.response.ActionMessage;
 import com.tscredit.origin.user.entity.dao.Resource;
 import com.tscredit.origin.user.service.ResourceService;
 import com.tscredit.origin.user.service.UserService;

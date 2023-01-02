@@ -1,9 +1,9 @@
 package com.tscredit.origin.user.utils;
 
 
-import com.tscredit.common.response.ErrorMessage;
-import com.tscredit.common.response.LogicException;
-import com.tscredit.platform.redis.config.RedisUtil;
+import com.aurora.base.constant.ErrorMessage;
+import com.aurora.base.exception.LogicException;
+import com.aurora.redis.config.RedisUtil;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;

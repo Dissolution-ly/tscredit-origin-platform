@@ -1,9 +1,9 @@
 package com.tscredit.origin.user.action;
 
 
+import com.aurora.base.entity.response.ActionMessage;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.tscredit.common.response.ActionMessage;
 import com.tscredit.origin.user.entity.dao.Role;
 import com.tscredit.origin.user.service.RoleService;
 import io.swagger.annotations.Api;

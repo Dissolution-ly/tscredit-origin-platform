@@ -1,15 +1,15 @@
 package com.tscredit.origin.user.action;
 
 
+import com.aurora.base.constant.ErrorMessage;
+import com.aurora.base.entity.response.ActionMessage;
+import com.aurora.base.exception.LogicException;
+import com.aurora.boot.validataed.Flag;
+import com.aurora.redis.config.RedisUtil;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.tscredit.common.response.ActionMessage;
-import com.tscredit.common.response.ErrorMessage;
-import com.tscredit.common.response.LogicException;
-import com.tscredit.common.validataed.Flag;
 import com.tscredit.origin.user.constant.RedisConstants;
 import com.tscredit.origin.user.entity.UserQuota;
 import com.tscredit.origin.user.service.UserQuotaService;
-import com.tscredit.platform.redis.config.RedisUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

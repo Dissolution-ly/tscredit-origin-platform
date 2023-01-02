@@ -1,9 +1,9 @@
 
 package com.tscredit.origin.user.entity.dto;
 
+import com.aurora.boot.validataed.Flag;
+import com.aurora.boot.validataed.PassWord;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.tscredit.common.validataed.Flag;
-import com.tscredit.common.validataed.PassWord;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -1,17 +1,17 @@
 package com.tscredit.origin.user.action;
 
 
+import com.aurora.base.constant.ErrorMessage;
+import com.aurora.base.entity.response.ActionMessage;
+import com.aurora.base.entity.response.Result;
+import com.aurora.base.exception.LogicException;
+import com.aurora.boot.util.BeanCopierUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.tscredit.common.response.ActionMessage;
-import com.tscredit.common.response.ErrorMessage;
-import com.tscredit.common.response.LogicException;
 import com.tscredit.origin.user.entity.dao.User;
 import com.tscredit.origin.user.entity.dto.CreateUserDTO;
 import com.tscredit.origin.user.entity.dto.QueryUserDTO;
 import com.tscredit.origin.user.entity.dto.UpdateUserDTO;
 import com.tscredit.origin.user.service.UserService;
-import com.tscredit.platform.base.result.Result;
-import com.tscredit.platform.base.util.BeanCopierUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

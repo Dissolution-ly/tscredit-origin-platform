@@ -1,11 +1,13 @@
 package com.tscredit.origin.user.service.impl;
 
+import com.aurora.base.constant.ErrorMessage;
+import com.aurora.base.enums.ResultCodeEnum;
+import com.aurora.base.exception.LogicException;
+import com.aurora.boot.util.BeanCopierUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
-import com.tscredit.common.response.ErrorMessage;
-import com.tscredit.common.response.LogicException;
 import com.tscredit.origin.user.entity.UserInfo;
 import com.tscredit.origin.user.entity.dao.User;
 import com.tscredit.origin.user.entity.dao.UserRole;
@@ -15,9 +17,6 @@ import com.tscredit.origin.user.entity.dto.UpdateUserDTO;
 import com.tscredit.origin.user.mapper.UserMapper;
 import com.tscredit.origin.user.service.UserRoleService;
 import com.tscredit.origin.user.service.UserService;
-import com.tscredit.platform.base.enums.ResultCodeEnum;
-import com.tscredit.platform.base.exception.BusinessException;
-import com.tscredit.platform.base.util.BeanCopierUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -309,7 +308,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         UserInfo userInfo = userMapper.queryUserInfo(wrapper);
 
         if (null == userInfo) {
-            throw new BusinessException(ResultCodeEnum.INVALID_USERNAME.getMsg());
+            throw LogicException.errorMessage(ResultCodeEnum.USER_NULL);
         }
 
 

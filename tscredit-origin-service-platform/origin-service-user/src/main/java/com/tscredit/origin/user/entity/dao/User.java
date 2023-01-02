@@ -1,12 +1,12 @@
 package com.tscredit.origin.user.entity.dao;
 
+import com.aurora.base.entity.BaseDto;
+import com.aurora.boot.validataed.Flag;
+import com.aurora.boot.validataed.PassWord;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.tscredit.common.validataed.Flag;
-import com.tscredit.common.validataed.PassWord;
-import com.tscredit.platform.mybatis.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @TableName("urm_user")
 @ApiModel(value = "User对象", description = "User对象")
-public class User extends BaseEntity {
+public class User extends BaseDto {
 
     private static final long serialVersionUID = 1L;
 

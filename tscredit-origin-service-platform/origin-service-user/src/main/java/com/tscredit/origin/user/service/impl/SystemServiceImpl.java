@@ -1,10 +1,10 @@
 package com.tscredit.origin.user.service.impl;
 
+import com.aurora.base.exception.LogicException;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tscredit.origin.user.entity.dao.SystemTable;
 import com.tscredit.origin.user.mapper.SystemTableMapper;
 import com.tscredit.origin.user.service.SystemService;
-import com.tscredit.platform.base.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +34,6 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public String exception() {
-        throw new BusinessException("自定义异常");
+        throw LogicException.errorMessage("自定义异常");
     }
 }

@@ -40,6 +40,10 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.aurora</groupId>
+            <artifactId>platform-base</artifactId>
+        </dependency>
     </dependencies>
 
 
@@ -101,19 +105,6 @@
 
     <profiles>
         <profile>
-            <id>me</id>
-            <properties>
-                <spring.profiles.active>me</spring.profiles.active>
-                <nacos.addr>152.136.113.186:8848</nacos.addr>
-                <nacos.config.prefix>origin-config</nacos.config.prefix>
-                <nacos.config.group>ORIGIN_GROUP</nacos.config.group>
-                <!--                <docker.harbor.addr>172.16.20.175</docker.harbor.addr>-->
-                <!--                <docker.harbor.project>tscredit</docker.harbor.project>-->
-                <!--                <docker.harbor.username>robot$tscredit</docker.harbor.username>-->
-                <!--                <docker.harbor.password>Jqazyv7vvZiL6TXuNcv7TrZeRdL8U9n3</docker.harbor.password>-->
-            </properties>
-        </profile>
-        <profile>
             <activation>
                 <!--默认为dev环境打包方式-->
                 <activeByDefault>true</activeByDefault>
@@ -121,8 +112,8 @@
             <id>dev</id>
             <properties>
                 <spring.profiles.active>dev</spring.profiles.active>
-                <nacos.addr>172.25.136.236:8847</nacos.addr>
-                <nacos.config.prefix>origin-config</nacos.config.prefix>
+                <nacos.addr>172.25.136.236:8848</nacos.addr>
+                <nacos.namespace>dev</nacos.namespace>
                 <nacos.config.group>ORIGIN_GROUP</nacos.config.group>
                 <!--                <docker.harbor.addr>172.16.20.175</docker.harbor.addr>-->
                 <!--                <docker.harbor.project>tscredit</docker.harbor.project>-->
@@ -135,8 +126,8 @@
             <properties>
                 <spring.profiles.active>test</spring.profiles.active>
                 <nacos.addr>127.0.0.1:8848</nacos.addr>
-                <nacos.config.prefix>origin-cloud-config</nacos.config.prefix>
-                <nacos.config.group>ORIGIN_CLOUD</nacos.config.group>
+                <nacos.namespace>test</nacos.namespace>
+                <nacos.config.group>ORIGIN_GROUP</nacos.config.group>
                 <!--                <docker.harbor.addr>172.16.20.175</docker.harbor.addr>-->
                 <!--                <docker.harbor.project>tscredit</docker.harbor.project>-->
                 <!--                <docker.harbor.username>robot$tscredit</docker.harbor.username>-->
@@ -148,8 +139,8 @@
             <properties>
                 <spring.profiles.active>prod</spring.profiles.active>
                 <nacos.addr>127.0.0.1:8848</nacos.addr>
-                <nacos.config.prefix>origin-cloud-config</nacos.config.prefix>
-                <nacos.config.group>ORIGIN_CLOUD</nacos.config.group>
+                <nacos.namespace>prod</nacos.namespace>
+                <nacos.config.group>ORIGIN_GROUP</nacos.config.group>
                 <!--                <docker.harbor.addr>172.16.20.175</docker.harbor.addr>-->
                 <!--                <docker.harbor.project>tscredit</docker.harbor.project>-->
                 <!--                <docker.harbor.username>robot$tscredit</docker.harbor.username>-->

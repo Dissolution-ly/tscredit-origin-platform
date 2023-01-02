@@ -1,10 +1,10 @@
 package com.tscredit.origin.user.entity.dao;
 
+import com.aurora.base.entity.BaseDto;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.tscredit.platform.mybatis.entity.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -19,7 +19,7 @@ import lombok.Data;
 @Data
 @TableName("t_sys_user_role")
 @ApiModel(value="UserRole对象", description="用户和角色关联表")
-public class UserRole extends BaseEntity {
+public class UserRole extends BaseDto {
 
     private static final long serialVersionUID = 1L;
 

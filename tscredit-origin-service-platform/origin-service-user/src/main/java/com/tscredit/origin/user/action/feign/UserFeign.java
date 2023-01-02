@@ -1,9 +1,9 @@
 package com.tscredit.origin.user.action.feign;
 
+import com.aurora.base.entity.response.Result;
 import com.tscredit.origin.user.entity.UserInfo;
 import com.tscredit.origin.user.entity.dto.QueryUserDTO;
 import com.tscredit.origin.user.service.UserService;
-import com.tscredit.platform.base.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class UserFeign {
         QueryUserDTO user = new QueryUserDTO();
         user.setMobile(phoneNumber);
         UserInfo userInfo = userService.queryUserInfo(user);
-        return Result.data(userInfo);
+        return Result.success(userInfo);
     }
 
     @GetMapping(value = "/query/by/account")
@@ -42,7 +42,7 @@ public class UserFeign {
         QueryUserDTO user = new QueryUserDTO();
         user.setLoginName(loginName);
         UserInfo userInfo = userService.queryUserInfo(user);
-        return Result.data(userInfo);
+        return Result.success(userInfo);
     }
 
     @GetMapping(value = "/query/by/openid")
@@ -51,6 +51,6 @@ public class UserFeign {
         QueryUserDTO user = new QueryUserDTO();
         // TODO 此处待定
         UserInfo userInfo = userService.queryUserInfo(user);
-        return Result.data(userInfo);
+        return Result.success(userInfo);
     }
 }

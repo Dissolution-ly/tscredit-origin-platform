@@ -1,6 +1,8 @@
 package com.tscredit.origin.user.service.impl;
 
-import cn.hutool.core.collection.CollectionUtil;
+
+import com.aurora.base.constant.AuthConstant;
+import com.aurora.redis.config.RedisUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -9,8 +11,6 @@ import com.tscredit.origin.user.entity.dao.RoleResource;
 import com.tscredit.origin.user.mapper.RoleMenuMapper;
 import com.tscredit.origin.user.service.ResourceService;
 import com.tscredit.origin.user.service.RoleResourceService;
-import com.tscredit.platform.base.constant.AuthConstant;
-import com.tscredit.platform.redis.config.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +79,7 @@ public class RoleResourceServiceImpl extends ServiceImpl<RoleMenuMapper, RoleRes
         List<Resource> resourceList = resourceService.list(wrapper);
         // 判断是否开启了租户模式，如果开启了，那么角色权限需要按租户进行分类存储
         if (enable) {
-            Map<Long, List<Resource>> resourceListMap =
+            Map<String, List<Resource>> resourceListMap =
                     resourceList.stream().collect(Collectors.groupingBy(Resource::getTenantId));
             resourceListMap.forEach((key, value) -> {
                 String redisKey = AuthConstant.TENANT_RESOURCE_ROLES_KEY + key;

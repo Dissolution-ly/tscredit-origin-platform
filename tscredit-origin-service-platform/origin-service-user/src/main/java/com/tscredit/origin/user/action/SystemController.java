@@ -1,9 +1,9 @@
 package com.tscredit.origin.user.action;
 
+import com.aurora.base.entity.response.Result;
+import com.aurora.base.exception.SystemException;
 import com.tscredit.origin.user.entity.dto.SystemDTO;
 import com.tscredit.origin.user.service.SystemService;
-import com.tscredit.platform.base.exception.BusinessException;
-import com.tscredit.platform.base.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +17,7 @@ import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import javax.security.auth.login.LoginException;
 import javax.validation.Valid;
 
 @RestController
@@ -54,43 +55,43 @@ public class SystemController {
     @GetMapping(value = "exception")
     @ApiOperation(value = "自定义异常及返回测试接口")
     public Result<String> exception() {
-        return Result.data(systemService.exception());
+        return Result.success(systemService.exception());
     }
 
     @PostMapping(value = "valid")
     @ApiOperation(value = "参数校验测试接口")
     public Result<SystemDTO> valid(@Valid @RequestBody SystemDTO systemDTO) {
-        return Result.data(systemDTO);
+        return Result.success(systemDTO);
     }
 
     @PostMapping(value = "nacos")
     @ApiOperation(value = "Nacos读取配置文件测试接口")
     public Result<String> nacos() {
-        return Result.data(timeZone);
+        return Result.success(timeZone);
     }
 
     @GetMapping(value = "api/by/id")
     @ApiOperation(value = "Fegin Get调用测试接口")
     public Result<Object> feginById(@RequestParam("id") String id) {
-        return Result.data(systemService.list());
+        return Result.success(systemService.list());
     }
 
     @PostMapping(value = "api/by/dto")
     @ApiOperation(value = "Fegin Post调用测试接口")
     public Result<Object> feginByDto(@Valid @RequestBody SystemDTO systemDTO) {
-        return Result.data(systemDTO);
+        return Result.success(systemDTO);
     }
 
     @GetMapping("/api/ribbon")
     @ApiOperation(value = "Ribbon调用测试接口")
     public Result<String> testRibbon() {
-        return Result.data("现在访问的服务端口是:" + serverPort);
+        return Result.success("现在访问的服务端口是:" + serverPort);
     }
 
     @ApiOperation(value = "限流测试")
     @GetMapping(value = "sentinel/protected")
     public Result<String> sentinelProtected() {
-        return Result.data("访问的是限流测试接口");
+        return Result.success("访问的是限流测试接口");
     }
 
     @ApiOperation(value = "慢调用比例熔断策略")
@@ -117,7 +118,7 @@ public class SystemController {
         double randomNumber;
         randomNumber = Math.random();
         if (randomNumber >= 0 && randomNumber <= 0.80) {
-            throw new BusinessException("系统异常");
+            throw new SystemException("系统异常");
         }
         return Result.success("异常比例/异常数量熔断策略");
     }

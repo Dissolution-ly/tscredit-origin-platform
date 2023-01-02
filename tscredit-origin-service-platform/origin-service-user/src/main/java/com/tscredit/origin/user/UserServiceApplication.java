@@ -6,11 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
-
-@ComponentScan(basePackages = {"com.tscredit"})
+@SpringBootApplication
 @EnableDiscoveryClient
 @MapperScan("com.tscredit.**.dao")
-@SpringBootApplication
+@ComponentScan(basePackages = {"com.tscredit"})
 public class UserServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class, args);

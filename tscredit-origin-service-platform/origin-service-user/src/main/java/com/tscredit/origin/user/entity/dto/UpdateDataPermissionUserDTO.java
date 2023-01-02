@@ -1,7 +1,7 @@
 package com.tscredit.origin.user.entity.dto;
 
 
-import com.tscredit.platform.mybatis.entity.BaseEntity;
+import com.aurora.base.entity.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value="DataPermissionUser对象", description="")
-public class UpdateDataPermissionUserDTO extends BaseEntity {
+public class UpdateDataPermissionUserDTO extends BaseDto {
 
     private static final long serialVersionUID = 1L;
 

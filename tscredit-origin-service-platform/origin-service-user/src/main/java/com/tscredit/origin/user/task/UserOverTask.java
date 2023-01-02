@@ -1,9 +1,10 @@
 package com.tscredit.origin.user.task;
 
+import com.aurora.redis.config.RedisUtil;
 import com.google.common.collect.Lists;
 import com.tscredit.origin.user.service.UserQuotaService;
 import com.tscredit.origin.user.service.UserService;
-import com.tscredit.platform.redis.config.RedisUtil;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

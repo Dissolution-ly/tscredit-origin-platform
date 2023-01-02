@@ -1,7 +1,7 @@
 package com.tscredit.origin.user.action;
 
 
-import com.tscredit.common.response.ActionMessage;
+import com.aurora.base.entity.response.ActionMessage;
 import com.tscredit.origin.user.entity.dao.User;
 import com.tscredit.origin.user.service.RoleResourceService;
 import com.tscredit.origin.user.service.UserService;
@@ -12,10 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.annotation.ApplicationScope;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;

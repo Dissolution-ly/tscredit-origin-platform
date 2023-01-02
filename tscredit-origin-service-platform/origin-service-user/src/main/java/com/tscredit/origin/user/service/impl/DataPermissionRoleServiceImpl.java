@@ -1,5 +1,8 @@
 package com.tscredit.origin.user.service.impl;
 
+import com.aurora.boot.util.BeanCopierUtils;
+import com.aurora.mybatis.constant.DataPermissionConstant;
+import com.aurora.mybatis.entity.DataPermission;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -10,9 +13,6 @@ import com.tscredit.origin.user.entity.dto.QueryDataPermissionRoleDTO;
 import com.tscredit.origin.user.entity.dto.UpdateDataPermissionRoleDTO;
 import com.tscredit.origin.user.mapper.DataPermissionRoleMapper;
 import com.tscredit.origin.user.service.DataPermissionRoleService;
-import com.tscredit.platform.base.util.BeanCopierUtils;
-import com.tscredit.platform.mybatis.constant.DataPermissionConstant;
-import com.tscredit.platform.mybatis.entity.DataPermissionEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,12 +139,12 @@ public class DataPermissionRoleServiceImpl extends ServiceImpl<DataPermissionRol
 
     private void addDataRolePermissions(String key, List<DataPermissionRoleDTO> dataPermissionRoleList) {
 
-        Map<String, DataPermissionEntity> dataPermissionMap = new TreeMap<>();
+        Map<String, DataPermission> dataPermissionMap = new TreeMap<>();
         for (DataPermissionRoleDTO dataPermissionRole : dataPermissionRoleList) {
             String dataRolePermissionCache = DataPermissionConstant.DATA_PERMISSION_KEY_MAPPER +
                     dataPermissionRole.getDataMapperFunction() + DataPermissionConstant.DATA_PERMISSION_KEY_TYPE +
                     dataPermissionRole.getDataPermissionType();
-            DataPermissionEntity dataPermissionEntity = BeanCopierUtils.copyByClass(dataPermissionRole, DataPermissionEntity.class);
+            DataPermission dataPermissionEntity = BeanCopierUtils.copyByClass(dataPermissionRole, DataPermission.class);
             dataPermissionMap.put(dataRolePermissionCache, dataPermissionEntity);
         }
         redisTemplate.boundHashOps(key).putAll(dataPermissionMap);

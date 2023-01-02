@@ -1,10 +1,10 @@
 package com.tscredit.origin.user.action;
 
+import com.aurora.base.constant.ErrorMessage;
+import com.aurora.base.entity.response.ActionMessage;
+import com.aurora.base.exception.LogicException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
-import com.tscredit.common.response.ActionMessage;
-import com.tscredit.common.response.ErrorMessage;
-import com.tscredit.common.response.LogicException;
 import com.tscredit.origin.user.entity.dao.RoleResource;
 import com.tscredit.origin.user.service.RoleResourceService;
 import io.swagger.annotations.Api;
