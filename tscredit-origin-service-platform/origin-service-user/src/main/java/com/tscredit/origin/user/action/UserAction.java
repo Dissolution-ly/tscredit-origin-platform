@@ -12,10 +12,11 @@ import com.tscredit.origin.user.entity.dto.CreateUserDTO;
 import com.tscredit.origin.user.entity.dto.QueryUserDTO;
 import com.tscredit.origin.user.entity.dto.UpdateUserDTO;
 import com.tscredit.origin.user.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,12 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
-@Api(tags = {"用户管理"}, value = "UserAction")
+@Tag(name = "用户管理", description = "UserAction")
 @Slf4j
 @Validated
 @RefreshScope
@@ -43,17 +43,17 @@ public class UserAction {
     private String defaultPwd;
     private final UserService userService;
 
-    @ApiOperation("分页列表查询")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "页数", dataType = "int", dataTypeClass = Integer.class, required = true, defaultValue = "1"),
-            @ApiImplicitParam(name = "pageSize", value = "每页条数", dataType = "int", dataTypeClass = Integer.class, required = true, defaultValue = "20")
+    @Operation(summary = "分页列表查询")
+    @Parameters({
+            @Parameter(name = "pageNum", description = "页数", required = true),
+            @Parameter(name = "pageSize", description = "每页条数", required = true)
     })
     @PostMapping("/list")
     public ActionMessage list(@RequestParam Integer pageNum, @RequestParam Integer pageSize, QueryUserDTO user) {
         return ActionMessage.success().data(userService.pageList(new Page<>(pageNum, pageSize), user));
     }
 
-    @ApiOperation("保存用户")
+    @Operation(summary = "保存用户")
     @PostMapping("/saveOrUpdate")
     public ActionMessage saveOrUpdate(@RequestBody CreateUserDTO user) {
         if (!userService.createUser(user)) {
@@ -64,7 +64,7 @@ public class UserAction {
     }
 
     @PostMapping("/update")
-    @ApiOperation(value = "修改用户")
+    @Operation(summary = "修改用户")
     public ActionMessage update(@RequestBody UpdateUserDTO updateUserDTO) {
         if (!userService.updateUser(updateUserDTO)) {
             return ActionMessage.error(ErrorMessage.SYS_REQUEST_ERROR);
@@ -72,9 +72,9 @@ public class UserAction {
         return ActionMessage.success();
     }
 
-    @ApiOperation("批量删除")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "ids", value = "id集合(字符串数组)", dataType = "long", dataTypeClass = Long.class, required = true),
+    @Operation(summary = "批量删除")
+    @Parameters({
+            @Parameter(name = "ids", description = "id集合(字符串数组)", required = true),
     })
     @PostMapping("/delete")
     public ActionMessage delete(@RequestParam List<Long> ids) {
@@ -84,7 +84,7 @@ public class UserAction {
         return ActionMessage.success();
     }
 
-    @ApiOperation("自己-修改密码")
+    @Operation(summary = "自己-修改密码")
     @PostMapping(value = "/changePassword")
     public ActionMessage changePassword(UpdateUserDTO updateUserDTO) {
         String newPwd = updateUserDTO.getNewPwd();
@@ -104,7 +104,7 @@ public class UserAction {
 
     }
 
-    @ApiOperation("管理员-初始化|重置密码")
+    @Operation(summary = "管理员-初始化|重置密码")
     @PostMapping(value = "/initPassword")
     public ActionMessage initPassword(@RequestParam(value = "id") Long userId) {
         // 验证是否存在
@@ -126,10 +126,10 @@ public class UserAction {
      * 修改用户状态
      */
     @PostMapping("/status/{userId}/{status}")
-    @ApiOperation(value = "管理员修改用户状态")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "用户ID", dataType = "long", dataTypeClass = Long.class, paramType = "path", required = true),
-            @ApiImplicitParam(name = "status", value = "用户状态", dataType = "string", dataTypeClass = String.class, paramType = "path", required = true)
+    @Operation(summary = "管理员修改用户状态")
+    @Parameters({
+            @Parameter(name = "userId", description = "用户ID",  required = true),
+            @Parameter(name = "status", description = "用户状态", required = true)
     })
     public ActionMessage updateStatus(@PathVariable("userId") @NotNull Long userId, @PathVariable("status") @NotNull String status) {
         UpdateUserDTO updateUserDTO = new UpdateUserDTO();
@@ -145,8 +145,8 @@ public class UserAction {
      * 个人修改用户信息，限制修改字段
      */
     @PostMapping("/update/info")
-    @ApiOperation(value = "用户修改个人信息")
-    public Result<?> updateInfo(@RequestBody UpdateUserDTO user, @ApiIgnore User tempUser) {
+    @Operation(summary = "用户修改个人信息")
+    public Result<?> updateInfo(@RequestBody UpdateUserDTO user, @Parameter(hidden = true) User tempUser) {
 //        UpdateUserDTO upUser = new UpdateUserDTO();
 //        upUser.setAvatar(user.getAvatar());
 //        upUser.setRealName(user.getRealName());
@@ -162,9 +162,9 @@ public class UserAction {
         return null;
     }
 
-    @ApiOperation("根据Id获取基本信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "id", required = true, dataType = "string", defaultValue = "1"),
+    @Operation(summary = "根据Id获取基本信息")
+    @Parameters({
+            @Parameter(name = "id", description = "id", required = true),
     })
     @PostMapping("/info")
     public ActionMessage info(String id) {
@@ -172,7 +172,7 @@ public class UserAction {
     }
 
 
-    @ApiOperation(value = "校验用户账号是否存在", notes = "校验用户账号是否存在")
+    @Operation(summary = "校验用户账号是否存在", description = "校验用户账号是否存在")
     @PostMapping(value = "/check")
     public ActionMessage checkUserExist(@Validated @NotNull QueryUserDTO queryUserDTO) {
         User user = BeanCopierUtils.copyByClass(queryUserDTO, User.class);

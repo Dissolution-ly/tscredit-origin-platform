@@ -2,8 +2,7 @@ package com.tscredit.origin.user.entity.dto;
 
 
 import com.aurora.base.entity.BaseDto;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,21 +16,21 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ApiModel(value="DataPermissionUser对象", description="")
+@Schema(name="DataPermissionUser对象", description="")
 public class CreateDataPermissionUserDTO extends BaseDto {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键")
+    @Schema(name = "主键")
     private Long id;
 
-    @ApiModelProperty(value = "用户id")
+    @Schema(name = "用户id")
     private Long userId;
 
-    @ApiModelProperty(value = "机构id")
+    @Schema(name = "机构id")
     private Long organizationId;
 
-    @ApiModelProperty(value = "状态 0禁用，1 启用,")
+    @Schema(name = "状态 0禁用，1 启用,")
     private Integer status;
 
 

@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -18,7 +17,7 @@ import lombok.Data;
  */
 @Data
 @TableName("t_sys_user_role")
-@ApiModel(value="UserRole对象", description="用户和角色关联表")
+@Schema(name="UserRole对象", description="用户和角色关联表")
 public class UserRole extends BaseDto {
 
     private static final long serialVersionUID = 1L;
@@ -26,11 +25,11 @@ public class UserRole extends BaseDto {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty(value = "用户id")
+    @Schema(name = "用户id")
     @TableField("user_id")
     private Long userId;
 
-    @ApiModelProperty(value = "角色id")
+    @Schema(name = "角色id")
     @TableField("role_id")
     private Long roleId;
 }

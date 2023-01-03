@@ -7,15 +7,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
 import com.tscredit.origin.user.entity.dao.RoleResource;
 import com.tscredit.origin.user.service.RoleResourceService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 
-@Api(tags = {"角色管理"}, value = "RoleMenuAction")
+@Tag(name = "角色管理", description = "RoleMenuAction")
 @RestController
 @RequestMapping("/roleMenu")
 public class RoleMenuAction {
@@ -26,7 +26,7 @@ public class RoleMenuAction {
         this.roleResourceService = roleResourceService;
     }
 
-    @ApiOperation("保存角色-菜单关系")
+    @Operation(summary = "保存角色-菜单关系")
     @PostMapping(value = "saveRoleMenu")
     public ActionMessage saveRoleMenuMapAction(@RequestParam String roleCode, @RequestParam List<String> menuIds) {
         QueryWrapper<RoleResource> removeWrapper = new QueryWrapper<>();
@@ -42,7 +42,7 @@ public class RoleMenuAction {
         return ActionMessage.success().data(roleResourceService.saveBatch(roleResources));
     }
 
-    @ApiOperation("根据角色Id,查询对应角色菜单url集合")
+    @Operation(summary = "根据角色Id,查询对应角色菜单url集合")
     @PostMapping(value = "selectRoleMenu")
     public ActionMessage selectRoleMenu(@RequestParam String roleCode, @RequestParam String type) {
         List<String> list = Lists.newArrayList("id", "url");

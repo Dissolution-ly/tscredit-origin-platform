@@ -16,10 +16,10 @@
     <name>${project.artifactId}</name>
 
     <modules>
-<!--        <module>tscredit-origin-oauth-platform</module>-->
-<!--        <module>tscredit-origin-oauth2-platform</module>-->
-<!--        <module>tscredit-origin-gateway-platform</module>-->
-<!--        <module>tscredit-origin-client-platform</module>-->
+        <!--        <module>tscredit-origin-oauth-platform</module>-->
+        <!--        <module>tscredit-origin-oauth2-platform</module>-->
+        <!--        <module>tscredit-origin-gateway-platform</module>-->
+        <!--        <module>tscredit-origin-client-platform</module>-->
         <module>tscredit-origin-service-platform</module>
     </modules>
 
@@ -67,9 +67,12 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
-                <excludes>
-                    <exclude>**/*.jks</exclude>
-                </excludes>
+                <includes>
+                    <include>*.properties</include>
+                    <include>*.yaml</include>
+                    <include>*.yml</include>
+                    <include>*.xml</include>
+                </includes>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>

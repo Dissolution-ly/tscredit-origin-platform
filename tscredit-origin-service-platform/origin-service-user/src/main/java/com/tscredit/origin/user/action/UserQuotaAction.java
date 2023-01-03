@@ -10,10 +10,10 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.tscredit.origin.user.constant.RedisConstants;
 import com.tscredit.origin.user.entity.UserQuota;
 import com.tscredit.origin.user.service.UserQuotaService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 
-@Api(tags = {"用户额度管理"}, value = "UserQuotaAction")
+@Tag(name = "用户额度管理", description = "UserQuotaAction")
 @RestController
 @RequestMapping("/userQuota")
 public class UserQuotaAction {
@@ -35,20 +35,20 @@ public class UserQuotaAction {
     }
 
 
-    @ApiOperation("额度配置-获取")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "userId", dataType = "string", dataTypeClass = String.class, required = true, defaultValue = "1"),
+    @Operation(summary = "额度配置-获取")
+    @Parameters({
+            @Parameter(name = "userId", description = "userId", required = true),
     })
     @PostMapping("/info")
     public ActionMessage info(String userId) {
         return ActionMessage.success().data(userQuotaService.getByUserId(userId));
     }
 
-    @ApiOperation("用户额度 设置为跟另一个 用户/角色 相同")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "修改额度用户ID", required = true),
-            @ApiImplicitParam(name = "sourceId", value = "额度源用户/角色 id", required = true),
-            @ApiImplicitParam(name = "type", value = "code类型： 1.用户，2.角色", required = true),
+    @Operation(summary = "用户额度 设置为跟另一个 用户/角色 相同")
+    @Parameters({
+            @Parameter(name = "userId", description = "修改额度用户ID", required = true),
+            @Parameter(name = "sourceId", description = "额度源用户/角色 id", required = true),
+            @Parameter(name = "type", description = "code类型： 1.用户，2.角色", required = true),
     })
     @PostMapping("/setBySourceId")
     public ActionMessage setBySourceId(@RequestParam Integer userId, @RequestParam String sourceId, @Flag(values = {"1", "2"}) @RequestParam Integer type) {
@@ -59,7 +59,7 @@ public class UserQuotaAction {
     }
 
 
-    @ApiOperation("额度配置-修改")
+    @Operation(summary = "额度配置-修改")
     @PostMapping("/saveOrUpdate")
     public ActionMessage update(@RequestBody List<UserQuota> data) {
         String userId = data.get(0).getUserId();

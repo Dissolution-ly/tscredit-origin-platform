@@ -2,8 +2,8 @@ package com.tscredit.origin.user.action.feign;
 
 import com.aurora.base.entity.response.Result;
 import com.tscredit.origin.user.service.ResourceService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/feign/resource")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@Api(value = "ResourceFeign|提供微服务调用接口")
+@Tag(name = "ResourceFeign|提供微服务调用接口")
 @RefreshScope
 public class ResourceFeign {
 
     private final ResourceService resourceService;
 
     @GetMapping(value = "/query/max/id")
-    @ApiOperation(value = "查询资源权限表最大的id值", notes = "查询资源权限表最大的id值")
+    @Operation(summary = "查询资源权限表最大的id值", description = "查询资源权限表最大的id值")
     public Result<Long> queryResourceMaxId() {
 //        Long idMax = 0L;
 //        QueryWrapper<Resource> queryWrapper = new QueryWrapper<>();

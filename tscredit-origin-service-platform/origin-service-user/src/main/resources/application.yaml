@@ -27,3 +27,17 @@ tenant:
 #      application: seata-server
 #      userName: "nacos"
 #      password: "nacos"
+springdoc:
+  use-fqn: true
+  api-docs:
+    resolve-schema-properties: true
+    path: /v3/api-docs
+  packagesToScan: com.tscredit.origin.user.action
+#  pathsToMatch: /v1, /api/balance/**
+  swagger-ui:
+    path: /doc
+    default-models-expand-depth: -1
+object:
+  version: @project.version@
+  artifactId: @project.artifactId@
+#  description: @project.description@

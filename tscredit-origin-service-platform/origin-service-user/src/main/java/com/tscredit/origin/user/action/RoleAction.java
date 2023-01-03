@@ -6,10 +6,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tscredit.origin.user.entity.dao.Role;
 import com.tscredit.origin.user.service.RoleService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 
-@Api(tags = {"角色"}, value = "RoleAction")
+@Tag(name = "角色", description = "RoleAction")
 @RestController
 @RequestMapping("/role")
 public class RoleAction {
@@ -31,37 +31,37 @@ public class RoleAction {
         this.roleService = roleService;
     }
 
-    @ApiOperation("分页列表查询")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageNum", value = "页数", dataType = "int", dataTypeClass = Integer.class, required = true, defaultValue = "1"),
-            @ApiImplicitParam(name = "pageSize", value = "每页条数", dataType = "int", dataTypeClass = Integer.class, required = true, defaultValue = "20")
+    @Operation(summary = "分页列表查询")
+    @Parameters({
+            @Parameter(name = "pageNum", description = "页数",required = true),
+            @Parameter(name = "pageSize", description = "每页条数", required = true)
     })
     @PostMapping("/list")
     public ActionMessage list(@RequestParam Integer pageNum, @RequestParam Integer pageSize, Role role) {
         return ActionMessage.success().data(roleService.pageList(new Page<>(pageNum, pageSize), role));
     }
 
-    @ApiOperation("根据Id获取基本信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "id", dataType = "string", dataTypeClass = String.class, required = true, defaultValue = "1"),
+    @Operation(summary = "根据Id获取基本信息")
+    @Parameters({
+            @Parameter(name = "id", description = "id",  required = true),
     })
     @PostMapping("/info")
     public ActionMessage info(String id) {
         return ActionMessage.success().data(roleService.getById(id));
     }
 
-    @ApiOperation("保存/修改")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "id", dataType = "string", dataTypeClass = String.class, required = true, defaultValue = "1"),
+    @Operation(summary = "保存/修改")
+    @Parameters({
+            @Parameter(name = "id", description = "id",required = true),
     })
     @PostMapping("/saveOrUpdate")
     public ActionMessage update(@Validated Role role) {
         return ActionMessage.success().data(roleService.saveOrUpdate(role));
     }
 
-    @ApiOperation("删除")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "ids", value = "id集合(字符串数组)", dataType = "string", dataTypeClass = String.class, required = true),
+    @Operation(summary = "删除")
+    @Parameters({
+            @Parameter(name = "ids", description = "id集合(字符串数组)", required = true),
     })
     @PostMapping("/delete")
     public ActionMessage delete(@RequestParam List<String> ids) {
@@ -69,7 +69,7 @@ public class RoleAction {
     }
 
 
-    @ApiOperation("角色名验重,true为重复")
+    @Operation(summary = "角色名验重,true为重复")
     @PostMapping(value = "isDuplicateRoleName")
     public ActionMessage isDuplicateRoleName(String id, @RequestParam String name) {
         QueryWrapper<Role> wrapper = new QueryWrapper<>();

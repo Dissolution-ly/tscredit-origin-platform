@@ -7,8 +7,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.Lists;
 import com.tscredit.origin.user.entity.UserAuthority;
 import com.tscredit.origin.user.service.UserAuthorityService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +19,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-
-@Api(tags = {"用户管理"}, value = "UserQuotaAction")
+@Tag(name = "用户管理", description = "UserQuotaAction")
 @RestController
 @RequestMapping("/userAuthortiy")
 public class UserAuthorityAction {
@@ -31,7 +30,7 @@ public class UserAuthorityAction {
         this.userAuthorityService = userAuthorityService;
     }
 
-    @ApiOperation("权限设置-获取")
+    @Operation(summary = "权限设置-获取")
     @PostMapping("/allAuthority")
     public ActionMessage allAuthority(@RequestParam String userId) {
         Map<Object, Object> data = userAuthorityService.userAuthority(userId);
@@ -54,7 +53,7 @@ public class UserAuthorityAction {
     }
 
 
-    @ApiOperation("权限设置-修改")
+    @Operation(summary = "权限设置-修改")
     @PostMapping("/setAuthority")
     @Transactional(rollbackFor = Exception.class)
     public ActionMessage setAuthority(@RequestBody Map<String, List<Map<String, Object>>> authority, @RequestParam String userId) throws JsonProcessingException {

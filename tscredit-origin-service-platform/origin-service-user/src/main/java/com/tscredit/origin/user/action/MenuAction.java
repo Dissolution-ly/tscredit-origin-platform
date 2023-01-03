@@ -7,10 +7,10 @@ import com.tscredit.origin.user.service.ResourceService;
 import com.tscredit.origin.user.service.UserService;
 import com.tscredit.origin.user.utils.JwtUtil;
 import com.tscredit.origin.user.utils.TreeUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-@Api(tags = {"菜单管理"}, value = "MenuAction")
+@Tag(name = "菜单管理", description = "MenuAction")
 @RestController
 @RequestMapping("/menu")
 public class MenuAction {
@@ -39,9 +39,9 @@ public class MenuAction {
         this.userService = userService;
     }
 
-    @ApiOperation("根据Id获取基本信息")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "id", dataType = "string", dataTypeClass = String.class, required = true, defaultValue = "1"),
+    @Operation(summary = "根据Id获取基本信息")
+    @Parameters({
+            @Parameter(name = "id", description = "id", required = true),
     })
     @PostMapping("/info")
     public ActionMessage info(String id) {
@@ -49,9 +49,9 @@ public class MenuAction {
     }
 
 
-    @ApiOperation("保存/修改")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "id", dataType = "string", dataTypeClass = String.class, defaultValue = "1"),
+    @Operation(summary = "保存/修改")
+    @Parameters({
+            @Parameter(name = "id", description = "id"),
     })
     @PostMapping("/saveOrUpdate")
     public ActionMessage update(Resource resource) {
@@ -59,9 +59,9 @@ public class MenuAction {
     }
 
 
-    @ApiOperation("删除")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "ids", value = "id集合(字符串数组)", dataType = "string", dataTypeClass = String.class, required = true),
+    @Operation(summary = "删除")
+    @Parameters({
+            @Parameter(name = "ids", description = "id集合(字符串数组)", required = true),
     })
     @PostMapping("/delete")
     public ActionMessage delete(@RequestParam List<String> ids) {
@@ -69,7 +69,7 @@ public class MenuAction {
     }
 
 
-    @ApiOperation("获取菜单树形图")
+    @Operation(summary = "获取菜单树形图")
     @PostMapping(value = "/menuTree")
 
     public ActionMessage menuTree(String name) {
@@ -114,7 +114,7 @@ public class MenuAction {
         return ActionMessage.success().data(result);
     }
 
-    @ApiOperation("获取指定用户拥有的菜单")
+    @Operation(summary = "获取指定用户拥有的菜单")
     @PostMapping(value = "/getUserMenu")
     public ActionMessage getUserMenu(HttpServletRequest request, String userId) {
         String roleCode = null;

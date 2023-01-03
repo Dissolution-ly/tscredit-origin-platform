@@ -6,8 +6,8 @@ import com.tscredit.origin.user.entity.dao.User;
 import com.tscredit.origin.user.service.RoleResourceService;
 import com.tscredit.origin.user.service.UserService;
 import com.tscredit.origin.user.utils.JwtUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.context.annotation.Scope;
@@ -22,7 +22,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@Api(tags = {"用户管理"}, value = "LoginAction")
+@Tag(name = "用户管理", description = "LoginAction")
 @Scope(value = "application")
 public class LoginAction {
 
@@ -35,7 +35,7 @@ public class LoginAction {
     }
 
 
-    @ApiOperation("登录")
+    @Operation(summary = "登录")
     @PostMapping(value = "/login")
     public void changePassword(@RequestParam String username, @RequestParam String password) {
         System.out.println(username + password);
@@ -44,13 +44,13 @@ public class LoginAction {
     /**
      * 根据token获取用户信息
      */
-    @ApiOperation(value = "根据token获取用户信息", notes = "根据token获取用户信息")
+    @Operation(summary = "根据token获取用户信息", description = "根据token获取用户信息")
     @PostMapping(value = "/userInfo/getByToken")
     public ActionMessage getUserByToken(HttpServletRequest request) {
         return ActionMessage.success().data(JwtUtil.token(request));
     }
 
-    @ApiOperation("修改密码")
+    @Operation(summary = "修改密码")
     @PostMapping(value = "/userInfo/changePassword")
     public ActionMessage changePassword(User user) {
 /*        // TODO 数据库查出当前用户密码
@@ -66,7 +66,7 @@ public class LoginAction {
         return null;
     }
 
-    @ApiOperation("查询当前登录用户的角色 对应的 菜单/权限")
+    @Operation(summary = "查询当前登录用户的角色 对应的 菜单/权限")
     @PostMapping(value = "/userInfo/selectRoleMenu")
     public ActionMessage selectRoleMenu(HttpServletRequest request) {
         Map<String, Object> user = JwtUtil.token(request);

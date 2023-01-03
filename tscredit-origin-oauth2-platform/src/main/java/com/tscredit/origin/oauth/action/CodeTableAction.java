@@ -26,9 +26,9 @@ public class CodeTableAction {
         this.query = query;
     }
 
-    @ApiOperation("权限配置-地区列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "type", value = "查询类型：1.园区,2.地区", dataType = "Integer", dataTypeClass = Integer.class, required = true, defaultValue = "1"),
+    @Operation("权限配置-地区列表")
+    @Parameters({
+            @Parameter(name = "type", value = "查询类型：1.园区,2.地区", dataType = "Integer", dataTypeClass = Integer.class, required = true, defaultValue = "1"),
     })
     @PostMapping("/area")
     public ActionMessage area(@RequestParam Integer type, String keyWord) {
@@ -50,7 +50,7 @@ public class CodeTableAction {
     }
 
 
-    @ApiOperation("查询产业链列表")
+    @Operation("查询产业链列表")
     @PostMapping("/industryLink")
     public ActionMessage industryLink() {
         Map<String, Object> map = query.queryRoute("getCylListInfo", null, "es");

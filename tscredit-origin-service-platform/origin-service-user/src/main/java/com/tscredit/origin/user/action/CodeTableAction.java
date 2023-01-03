@@ -5,17 +5,17 @@ import com.aurora.base.constant.ErrorMessage;
 import com.aurora.base.entity.response.ActionMessage;
 import com.aurora.base.exception.LogicException;
 import com.tscredit.tsinterfaces.access.HttpQuery;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-@Api(tags = {"码表查询"}, value = "CodeTableAction")
+@Tag(name = "码表查询", description = "CodeTableAction")
 @RestController
 @RequestMapping("/codeTable")
 public class CodeTableAction {
@@ -26,9 +26,9 @@ public class CodeTableAction {
         this.query = query;
     }
 
-    @ApiOperation("权限配置-地区列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "type", value = "查询类型：1.园区,2.地区", dataType = "string", dataTypeClass = Integer.class, required = true, defaultValue = "1"),
+    @Operation(summary = "权限配置-地区列表")
+    @Parameters({
+            @Parameter(name = "type", description = "查询类型：1.园区,2.地区", required = true),
     })
     @PostMapping("/area")
     public ActionMessage area(@RequestParam Integer type, String keyWord) {
@@ -50,7 +50,7 @@ public class CodeTableAction {
     }
 
 
-    @ApiOperation("查询产业链列表")
+    @Operation(summary = "查询产业链列表")
     @PostMapping("/industryLink")
     public ActionMessage industryLink() {
         Map<String, Object> map = query.queryRoute("getCylListInfo", null, "es");

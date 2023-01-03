@@ -68,27 +68,27 @@ public class OAuthController {
     @Value("${captcha.type}")
     private String captchaType;
 
-    @ApiOperation("获取系统配置的验证码类型")
+    @Operation("获取系统配置的验证码类型")
     @GetMapping("/captcha/type")
     public Result captchaType() {
         return Result.data(captchaType);
     }
 
-    @ApiOperation("生成滑动验证码")
+    @Operation("生成滑动验证码")
     @PostMapping("/captcha")
     public Result captcha(@RequestBody CaptchaVO captchaVO) {
         ResponseModel responseModel = captchaService.get(captchaVO);
         return Result.data(responseModel);
     }
 
-    @ApiOperation("滑动验证码验证")
+    @Operation("滑动验证码验证")
     @PostMapping("/captcha/check")
     public Result captchaCheck(@RequestBody CaptchaVO captchaVO) {
         ResponseModel responseModel = captchaService.check(captchaVO);
         return Result.data(responseModel);
     }
 
-    @ApiOperation("生成图片验证码")
+    @Operation("生成图片验证码")
     @RequestMapping("/captcha/image")
     public Result captchaImage() {
         SpecCaptcha specCaptcha = new SpecCaptcha(130, 48, 5);
@@ -104,19 +104,19 @@ public class OAuthController {
         return Result.data(imageCaptcha);
     }
 
-    @ApiOperation("OAuth2生成token")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "grant_type", value = "授权模式", dataType = "string", dataTypeClass = String.class, required = true, defaultValue = "password"),
-            @ApiImplicitParam(name = "client_id", value = "Oauth2客户端ID", dataType = "string", dataTypeClass = String.class, required = true, defaultValue = "client"),
-            @ApiImplicitParam(name = "client_secret", value = "Oauth2客户端秘钥", dataType = "string", dataTypeClass = String.class, required = true, defaultValue = "123456"),
-            @ApiImplicitParam(name = "refresh_token", value = "刷新token", dataType = "string", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "username", value = "登录用户名", dataType = "string", dataTypeClass = String.class, defaultValue = "admin"),
-            @ApiImplicitParam(name = "password", value = "登录密码", dataType = "string", dataTypeClass = String.class, defaultValue = "123456"),
-            @ApiImplicitParam(name = "phoneNumber", value = "手机号码", dataType = "string", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "smsCode", value = "短信模板code", dataType = "string", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "code", value = "小程序code/短信验证码", dataType = "string", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "encryptedData", value = "包括敏感数据在内的完整用户信息的加密数据", dataType = "string", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "iv", value = "加密算法的初始向量", dataType = "string", dataTypeClass = String.class),
+    @Operation("OAuth2生成token")
+    @Parameters({
+            @Parameter(name = "grant_type", value = "授权模式", dataType = "string", dataTypeClass = String.class, required = true, defaultValue = "password"),
+            @Parameter(name = "client_id", value = "Oauth2客户端ID", dataType = "string", dataTypeClass = String.class, required = true, defaultValue = "client"),
+            @Parameter(name = "client_secret", value = "Oauth2客户端秘钥", dataType = "string", dataTypeClass = String.class, required = true, defaultValue = "123456"),
+            @Parameter(name = "refresh_token", value = "刷新token", dataType = "string", dataTypeClass = String.class),
+            @Parameter(name = "username", value = "登录用户名", dataType = "string", dataTypeClass = String.class, defaultValue = "admin"),
+            @Parameter(name = "password", value = "登录密码", dataType = "string", dataTypeClass = String.class, defaultValue = "123456"),
+            @Parameter(name = "phoneNumber", value = "手机号码", dataType = "string", dataTypeClass = String.class),
+            @Parameter(name = "smsCode", value = "短信模板code", dataType = "string", dataTypeClass = String.class),
+            @Parameter(name = "code", value = "小程序code/短信验证码", dataType = "string", dataTypeClass = String.class),
+            @Parameter(name = "encryptedData", value = "包括敏感数据在内的完整用户信息的加密数据", dataType = "string", dataTypeClass = String.class),
+            @Parameter(name = "iv", value = "加密算法的初始向量", dataType = "string", dataTypeClass = String.class),
     })
     @PostMapping("/token")
     public Result postAccessToken(@ApiIgnore Principal principal, @ApiIgnore @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {
@@ -150,7 +150,7 @@ public class OAuthController {
         return Result.data(oauth2Token);
     }
 
-    @ApiOperation("发送短信验证码")
+    @Operation("发送短信验证码")
     @PostMapping("/sms/captcha/send")
     public Result sendSmsCaptcha(@ApiIgnore @RequestParam Map<String, String> parameters) {
         boolean checkCaptchaResult = CaptchaUtils.checkCaptcha(parameters, redisTemplate, captchaService);

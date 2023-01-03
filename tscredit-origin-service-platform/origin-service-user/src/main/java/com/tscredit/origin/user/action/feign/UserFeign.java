@@ -4,8 +4,8 @@ import com.aurora.base.entity.response.Result;
 import com.tscredit.origin.user.entity.UserInfo;
 import com.tscredit.origin.user.entity.dto.QueryUserDTO;
 import com.tscredit.origin.user.service.UserService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/feign/user")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
-@Api(value = "UserFeign|提供微服务调用接口")
+@Tag(name = "UserFeign|提供微服务调用接口")
 @RefreshScope
 public class UserFeign {
 
     private final UserService userService;
 
     @GetMapping(value = "/query/by/phone")
-    @ApiOperation(value = "通过手机号码查询用户信息", notes = "通过手机号码查询用户信息")
+    @Operation(summary = "通过手机号码查询用户信息", description = "通过手机号码查询用户信息")
     public Result<UserInfo> queryByPhone(String phoneNumber) {
         QueryUserDTO user = new QueryUserDTO();
         user.setMobile(phoneNumber);
@@ -37,7 +37,7 @@ public class UserFeign {
     }
 
     @GetMapping(value = "/query/by/account")
-    @ApiOperation(value = "通过账号查询用户信息", notes = "通过账号查询用户信息")
+    @Operation(summary = "通过账号查询用户信息", description = "通过账号查询用户信息")
     public Result<UserInfo> queryByAccount(String loginName) {
         QueryUserDTO user = new QueryUserDTO();
         user.setLoginName(loginName);
@@ -46,7 +46,7 @@ public class UserFeign {
     }
 
     @GetMapping(value = "/query/by/openid")
-    @ApiOperation(value = "通过微信openid查询用户信息", notes = "通过微信openid查询用户信息")
+    @Operation(summary = "通过微信openid查询用户信息", description = "通过微信openid查询用户信息")
     public Result<UserInfo> queryByOpenId(String openid) {
         QueryUserDTO user = new QueryUserDTO();
         // TODO 此处待定
