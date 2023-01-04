@@ -19,7 +19,7 @@
         <!--        <module>tscredit-origin-oauth-platform</module>-->
         <!--        <module>tscredit-origin-oauth2-platform</module>-->
         <!--        <module>tscredit-origin-gateway-platform</module>-->
-        <!--        <module>tscredit-origin-client-platform</module>-->
+        <module>tscredit-origin-client-platform</module>
         <module>tscredit-origin-service-platform</module>
     </modules>
 
@@ -72,6 +72,7 @@
                     <include>*.yaml</include>
                     <include>*.yml</include>
                     <include>*.xml</include>
+                    <include>mapper/*.xml</include>
                 </includes>
             </resource>
             <resource>

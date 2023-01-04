@@ -1,0 +1,19 @@
+springdoc:
+  use-fqn: true
+  api-docs:
+    resolve-schema-properties: true
+    path: /v3/api-docs
+  packagesToScan: com.tscredit.origin.main.action
+  #  pathsToMatch: /v1, /api/balance/**
+  swagger-ui:
+    path: /doc
+    default-models-expand-depth: -1
+object:
+  version: @project.version@
+  artifactId: @project.artifactId@
+spring:
+  cloud:
+    loadbalancer:
+      retry:
+        # 该参数用来开启或关闭重试机制，默认是开启
+        enabled: false

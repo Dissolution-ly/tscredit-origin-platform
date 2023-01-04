@@ -20,6 +20,12 @@
     </modules>
 
     <dependencies>
+        <!-- OpenFeign-client -->
+        <dependency>
+            <groupId>${groupId}</groupId>
+            <artifactId>origin-service-user-client</artifactId>
+            <version>${version}</version>
+        </dependency>
         <!-- aurora 扩展 -->
         <dependency>
             <groupId>com.aurora</groupId>

@@ -18,6 +18,10 @@
 			<groupId>com.aizuda</groupId>
 			<artifactId>aizuda-oss</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.minio</groupId>
+			<artifactId>minio</artifactId>
+		</dependency>
 		<!-- springboot -->
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->

@@ -7,7 +7,7 @@
     <!-- 输出编码 -->
     <property name="log.encode" value="UTF-8" />
     <!-- 输出级别 -->
-    <property name="log.level" value="DEBUG" />
+    <property name="log.level" value="INFO" />
     <!-- 输出格式：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
     <property name="log.pattern" value="%boldYellow(%d{yyyy-MM-dd HH:mm:ss.SSS}) %cyan([%thread]) %highlight(%-5level) %highlight(%logger{50}) - %highlight(%msg)  %n"/>
 

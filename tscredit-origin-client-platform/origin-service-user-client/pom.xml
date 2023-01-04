@@ -6,7 +6,7 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>com.tscredit</groupId>
+        <groupId>com.origin</groupId>
         <artifactId>tscredit-origin-client-platform</artifactId>
         <version>1.0.0</version>
     </parent>
@@ -14,6 +14,11 @@
 
     <artifactId>origin-service-user-client</artifactId>
     <name>${project.artifactId}</name>
+
+
+
+
+
 
 
 </project>

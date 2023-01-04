@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "UserFeign|提供微服务调用接口")
 @RefreshScope
 public class UserFeign {
+
+    @Value("${server.port}")
+    private Integer serverPort;
 
     private final UserService userService;
 
@@ -49,8 +53,11 @@ public class UserFeign {
     @Operation(summary = "通过微信openid查询用户信息", description = "通过微信openid查询用户信息")
     public Result<UserInfo> queryByOpenId(String openid) {
         QueryUserDTO user = new QueryUserDTO();
+        user.setMobile("18888888888");
         // TODO 此处待定
-        UserInfo userInfo = userService.queryUserInfo(user);
+//        UserInfo userInfo = userService.queryUserInfo(user);
+        UserInfo userInfo = new UserInfo();
+        userInfo.setMobile(serverPort + "");
         return Result.success(userInfo);
     }
 }
