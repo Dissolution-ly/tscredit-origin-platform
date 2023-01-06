@@ -18,27 +18,27 @@ spring:
           enabled: true
           # 请求路径 使用 小写服务名（默认大写）
           lower-case-service-id: true
-#      globalcors:
-#        # 全局的跨域处理
-#        add-to-simple-url-handler-mapping: true # 解决 options 请求被拦截问题
-#        corsConfigurations:
-#          '[/login]':
-#            allowedOrigins: "*"
-#            allowedMethods: "*"
-#          '[/oauth/**]':
-#            allowedOrigins: "*"
-#            allowedMethods: "*"
-#          '[/**]':
-#            allowedOrigins: "*"
-#            allowedMethods: # 允许的跨域ajax的请求方式
-#              - "GET"
-#              - "POST"
-#              - "DELETE"
-#              - "PUT"
-#              - "OPTIONS"
-#            allowedHeaders: "*" # 允许在请求中携带的头信息
-##            allowCredentials: true # 是否允许携带 cookie
-#            maxAge: 360000 # 这次跨域检测的有效期
+      globalcors:
+        # 全局的跨域处理
+        add-to-simple-url-handler-mapping: true # 解决 options 请求被拦截问题
+        corsConfigurations:
+          '[/login]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+          '[/oauth/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: # 允许的跨域ajax的请求方式
+              - "GET"
+              - "POST"
+              - "DELETE"
+              - "PUT"
+              - "OPTIONS"
+            allowedHeaders: "*" # 允许在请求中携带的头信息
+#            allowCredentials: true # 是否允许携带 cookie
+            maxAge: 360000 # 这次跨域检测的有效期
 #      routes:
 #        - id: oauth
 #          uri: lb://tscredit-origin-oauth-platform
