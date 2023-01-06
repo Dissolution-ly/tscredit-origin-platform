@@ -1,0 +1,25 @@
+server:
+  port: 80
+spring:
+  application:
+    name: '@artifactId@'
+  profiles:
+    active: '@spring.profiles.active@'
+  cloud:
+    nacos:
+      discovery:
+        cluster-name: AA
+        server-addr: @nacos.addr@
+        namespace: @nacos.namespace@
+      config:
+        enabled: true
+        server-addr: @nacos.addr@
+        namespace: @nacos.namespace@
+        group: @nacos.config.group@
+        file-extension: yaml
+        sharedConfigs:
+          - dataId: origin_common.yaml
+            group: ORIGIN_GROUP
+            refresh: false
+          - dataId: common.yaml
+

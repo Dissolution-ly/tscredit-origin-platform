@@ -1,14 +1,23 @@
 spring:
-##  main:
-##    allow-bean-definition-overriding: true
-#  cloud:
-#    gateway:
-#      discovery:
-#        locator:
-#          # 开启从注册中心动态创建路由的功能： 自动根据服务发现为每一个服务创建 以服务名开头的请求路径转发 router
-#          enabled: true
-#          # 请求路径 使用 小写服务名（默认大写）
-#          lower-case-service-id: true
+#  redis:
+#    host: 172.25.136.236
+#    #    password: 123456
+#    port: 6379
+#    database: 0
+#    lettuce:
+#      pool:
+#        max-active: 200
+#        max-wait: 3000
+#        max-idle: 20
+#        min-idle: 2
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          # 开启从注册中心动态创建路由的功能： 自动根据服务发现为每一个服务创建 以服务名开头的请求路径转发 router
+          enabled: true
+          # 请求路径 使用 小写服务名（默认大写）
+          lower-case-service-id: true
 #      globalcors:
 #        # 全局的跨域处理
 #        add-to-simple-url-handler-mapping: true # 解决 options 请求被拦截问题
@@ -54,17 +63,6 @@ spring:
 #      resourceserver:
 #        jwt:
 #          jwk-set-uri: http://localhost:8081/rsa/publicKey # 配置RSA的公钥访问地址
-  redis:
-    host: 172.25.136.236
-#    password: 123456
-    port: 6379
-    database: 0
-    lettuce:
-      pool:
-        max-active: 200
-        max-wait: 3000
-        max-idle: 20
-        min-idle: 2
 #
 #logging:
 #  level:
