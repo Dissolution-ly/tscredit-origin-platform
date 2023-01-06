@@ -13,7 +13,30 @@ object:
   artifactId: @project.artifactId@
 spring:
   cloud:
+    sentinel:
+      eager: true
+      transport:
+        dashboard: 172.25.136.236:9988   #sentinel控制台的请求地址
+        port: 9988
+        clientIp: 172.25.136.65
+      datasource:
+        # 名称随意
+        flow:
+          nacos:
+            server-addr: @nacos.addr@
+            namespace: @nacos.namespace@
+            group-id: @nacos.config.group@
+            dataId: @artifactId@-sentinel
+            # 规则类型，取值见：
+            # org.springframework.cloud.alibaba.sentinel.datasource.RuleType
+            rule-type: flow
     loadbalancer:
       retry:
         # 该参数用来开启或关闭重试机制，默认是开启
         enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+

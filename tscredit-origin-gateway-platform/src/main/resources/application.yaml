@@ -1,104 +1,105 @@
 spring:
-  main:
-    allow-bean-definition-overriding: true
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          # 开启从注册中心动态创建路由的功能： 自动根据服务发现为每一个服务创建 以服务名开头的请求路径转发 router
-          enabled: true
-          # 请求路径 使用 小写服务名（默认大写）
-          lower-case-service-id: true
-      globalcors:
-        # 全局的跨域处理
-        add-to-simple-url-handler-mapping: true # 解决 options 请求被拦截问题
-        corsConfigurations:
-          '[/login]':
-            allowedOrigins: "*"
-            allowedMethods: "*"
-          '[/oauth/**]':
-            allowedOrigins: "*"
-            allowedMethods: "*"
-          '[/**]':
-            allowedOrigins: "*"
-            allowedMethods: # 允许的跨域ajax的请求方式
-              - "GET"
-              - "POST"
-              - "DELETE"
-              - "PUT"
-              - "OPTIONS"
-            allowedHeaders: "*" # 允许在请求中携带的头信息
-#            allowCredentials: true # 是否允许携带 cookie
-            maxAge: 360000 # 这次跨域检测的有效期
-      routes:
-        - id: oauth
-          uri: lb://tscredit-origin-oauth-platform
-          predicates:
-            - Path=/origin-oauth/**
-          filters:
-            - StripPrefix=1
-        - id: oauth2
-          uri: lb://tscredit-origin-oauth-platform
-          predicates:
-            - Path=/oauth/token,/oauth/authorize,/login
-          filters:
-            - PreserveHostHeader
-        - id: origin-service-user
-          uri: lb://origin-service-user
-          predicates:
-            - Path=/origin-user/**
-          filters:
-            - StripPrefix=1
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: http://localhost:8081/rsa/publicKey # 配置RSA的公钥访问地址
+##  main:
+##    allow-bean-definition-overriding: true
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator:
+#          # 开启从注册中心动态创建路由的功能： 自动根据服务发现为每一个服务创建 以服务名开头的请求路径转发 router
+#          enabled: true
+#          # 请求路径 使用 小写服务名（默认大写）
+#          lower-case-service-id: true
+#      globalcors:
+#        # 全局的跨域处理
+#        add-to-simple-url-handler-mapping: true # 解决 options 请求被拦截问题
+#        corsConfigurations:
+#          '[/login]':
+#            allowedOrigins: "*"
+#            allowedMethods: "*"
+#          '[/oauth/**]':
+#            allowedOrigins: "*"
+#            allowedMethods: "*"
+#          '[/**]':
+#            allowedOrigins: "*"
+#            allowedMethods: # 允许的跨域ajax的请求方式
+#              - "GET"
+#              - "POST"
+#              - "DELETE"
+#              - "PUT"
+#              - "OPTIONS"
+#            allowedHeaders: "*" # 允许在请求中携带的头信息
+##            allowCredentials: true # 是否允许携带 cookie
+#            maxAge: 360000 # 这次跨域检测的有效期
+#      routes:
+#        - id: oauth
+#          uri: lb://tscredit-origin-oauth-platform
+#          predicates:
+#            - Path=/origin-oauth/**
+#          filters:
+#            - StripPrefix=1
+#        - id: oauth2
+#          uri: lb://tscredit-origin-oauth-platform
+#          predicates:
+#            - Path=/oauth/token,/oauth/authorize,/login
+#          filters:
+#            - PreserveHostHeader
+#        - id: origin-service-user
+#          uri: lb://origin-service-user
+#          predicates:
+#            - Path=/origin-user/**
+#          filters:
+#            - StripPrefix=1
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          jwk-set-uri: http://localhost:8081/rsa/publicKey # 配置RSA的公钥访问地址
   redis:
-    host: 152.136.113.186
+    host: 172.25.136.236
+#    password: 123456
     port: 6379
     database: 0
-    jedis:
+    lettuce:
       pool:
         max-active: 200
         max-wait: 3000
         max-idle: 20
         min-idle: 2
-        timeout: 5000
-logging:
-  level:
-    org.springframework:cloud.gateway: debug
-
-# 多租户配置
-tenant:
-  # 是否开启租户模式
-  enable: true
-  # 需要排除的多租户的表
-  exclusionTable:
-    - "t_sys_district"
-    - "t_sys_tenant"
-    - "t_sys_role"
-    - "t_sys_resource"
-    - "t_sys_role_resource"
-  # 租户字段名称
-  column: tenant_id
-oauth-list:
-  whiteUrls:
-    - "/origin-uaa/oauth/public_key"
-    # 下面的配置，想办法搞掉，压根很不需要
-    # 鉴权
-    - "/actuator/**"
-    - "/oauth/token"
-    - "/oauth/authorize"
-    - "/login"
-    - "/loginBefor/**"
-    # swagger
-    - "/doc.html"
-    - "/favicon.ico"
-    - "/webjars/**"
-    - "/swagger-resources/**"
-    - "/*/v2/api-docs"
-    # 静态资源
-    - "/images/**"
-    - "/js/**"
-    - "/error*/**"
+#
+#logging:
+#  level:
+#    org.springframework:cloud.gateway: debug
+#
+## 多租户配置
+#tenant:
+#  # 是否开启租户模式
+#  enable: true
+#  # 需要排除的多租户的表
+#  exclusionTable:
+#    - "t_sys_district"
+#    - "t_sys_tenant"
+#    - "t_sys_role"
+#    - "t_sys_resource"
+#    - "t_sys_role_resource"
+#  # 租户字段名称
+#  column: tenant_id
+#oauth-list:
+#  whiteUrls:
+#    - "/origin-uaa/oauth/public_key"
+#    # 下面的配置，想办法搞掉，压根很不需要
+#    # 鉴权
+#    - "/actuator/**"
+#    - "/oauth/token"
+#    - "/oauth/authorize"
+#    - "/login"
+#    - "/loginBefor/**"
+#    # swagger
+#    - "/doc.html"
+#    - "/favicon.ico"
+#    - "/webjars/**"
+#    - "/swagger-resources/**"
+#    - "/*/v2/api-docs"
+#    # 静态资源
+#    - "/images/**"
+#    - "/js/**"
+#    - "/error*/**"
