@@ -1,4 +1,4 @@
-//package com.tscredit.origin.gateway.config.swagger;
+package com.tscredit.origin.gateway.config.swagger;//package com.tscredit.origin.gateway.config.swagger;
 //
 //
 //import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -13,7 +13,7 @@
 //public class SwaggerHeaderFilter extends AbstractGatewayFilterFactory {
 //    private static final String HEADER_NAME = "X-Forwarded-Prefix";
 //
-//    public static final String URI = "/v2/api-docs";
+//    public static final String URI = "/v3/api-docs";
 //
 //    @Override
 //    public GatewayFilter apply(Object config) {
