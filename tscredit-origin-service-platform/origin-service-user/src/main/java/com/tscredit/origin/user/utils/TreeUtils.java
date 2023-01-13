@@ -6,6 +6,9 @@ import java.util.Map;
 
 /**
  * java 对象快速构建树形数据
+ *
+ * @author liuweiwei
+ * @since 2017-12-07 12:03
  */
 public class TreeUtils {
     /**
@@ -71,6 +74,7 @@ public class TreeUtils {
          * 筛选List集合
          *
          * @return
+         * @author liuweiwei
          * @comment
          */
         T findRoot(T row);

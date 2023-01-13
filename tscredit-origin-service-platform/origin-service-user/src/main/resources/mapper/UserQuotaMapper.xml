@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tscredit.origin.user.mapper.UserQuotaMapper">
+<mapper namespace="com.tscredit.origin.user.dao.UserQuotaMapper">
 
     <!-- 根据用户ID获取，该用户的额度信息 -->
     <select id="getByUserId" resultType="java.util.Map">
@@ -48,18 +48,18 @@
 
 
     <select id="authority" resultType="java.util.Map">
-        SELECT t_authority.id                     AS authorityId,
-               t_user_authority.authority_content AS authorityContent
-        FROM t_authority
-                 LEFT JOIN t_user_authority
-                           ON t_authority.id = t_user_authority.authority_id
-                               and t_user_authority.user_id = #{userId} and t_authority.`status` = '1'
-        ORDER BY t_authority.sort
+        SELECT urm_authority.id                     AS authorityId,
+               urm_user_authority.authority_content AS authorityContent
+        FROM urm_authority
+                 LEFT JOIN urm_user_authority
+                           ON urm_authority.id = urm_user_authority.authority_id
+                               and urm_user_authority.user_id = #{userId} and urm_authority.`status` = '1'
+        ORDER BY urm_authority.sort
     </select>
 
     <!-- 根据用户ID 删除用户所有权限 (删除用户操作联动) -->
     <delete id="deleteAuthorityByUserId">
         delete
-        from t_user_authority ${ew.customSqlSegment}
+        from urm_user_authority ${ew.customSqlSegment}
     </delete>
 </mapper>

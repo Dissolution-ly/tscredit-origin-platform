@@ -7,20 +7,24 @@
     <!-- 输出编码 -->
     <property name="log.encode" value="UTF-8" />
     <!-- 输出级别 -->
-    <property name="log.level" value="INFO" />
+    <property name="log.level" value="DEBUG" />
     <!-- 输出格式：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
     <property name="log.pattern" value="%boldYellow(%d{yyyy-MM-dd HH:mm:ss.SSS}) %cyan([%thread]) %highlight(%-5level) %highlight(%logger{50}) - %highlight(%msg)  %n"/>
 
 
     <!-- 指定包或类的输出级别 -->
-    <logger name="org.apache" level="ERROR" />
     <logger name="org.apache.http" level="ERROR" />
     <logger name="org.redisson.connection" level="ERROR" />
     <logger name="org.springframework.boot.autoconfigure" level="ERROR" />
     <logger name="io.lettuce.core.protocol" level="ERROR" />
-    <logger name="o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor" level="ERROR" />
+    <logger name="com.alibaba.nacos.shaded.io.grpc.netty.shaded.io.grpc.netty" level="ERROR" />
+    <logger name="org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor" level="ERROR" />
 
 
+
+    <logger name="org.springframework.web" level="trace" />
+    <logger name="org.springframework.security" level="trace" />
+    <logger name="org.springframework.security.oauth2" level="debug" />
     <!-- dev 环境,仅做控制台输出 -->
     <springProfile name="dev">
         <!-- 控制台输出 -->

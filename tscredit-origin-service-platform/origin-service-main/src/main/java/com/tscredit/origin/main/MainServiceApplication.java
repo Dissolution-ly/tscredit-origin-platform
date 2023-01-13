@@ -5,11 +5,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(value = {"com.tscredit"})
 @MapperScan({"com.tscredit.*.dao","com.tscredit.*.mapper"})
+@EnableFeignClients("com.tscredit.service.client")
 public class MainServiceApplication extends SpringBootServletInitializer {
 
 

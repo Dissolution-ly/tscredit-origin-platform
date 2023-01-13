@@ -5,8 +5,8 @@ import com.aurora.base.entity.response.ActionMessage;
 import com.aurora.base.exception.LogicException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
-import com.tscredit.origin.user.entity.dao.RoleResource;
-import com.tscredit.origin.user.service.RoleResourceService;
+import com.tscredit.origin.user.entity.RoleMenu;
+import com.tscredit.origin.user.service.RoleMenuService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
@@ -15,31 +15,35 @@ import java.util.List;
 
 
 
-@Tag(name = "角色管理", description = "RoleMenuAction")
+/**
+ * @author lixuanyu
+ * @since 2021-08-11
+ */
+@Tag(name ="角色管理", description = "RoleMenuAction")
 @RestController
 @RequestMapping("/roleMenu")
 public class RoleMenuAction {
 
-    private final RoleResourceService roleResourceService;
+    private final RoleMenuService roleMenuService;
 
-    public RoleMenuAction(RoleResourceService roleResourceService) {
-        this.roleResourceService = roleResourceService;
+    public RoleMenuAction(RoleMenuService roleMenuService) {
+        this.roleMenuService = roleMenuService;
     }
 
     @Operation(summary = "保存角色-菜单关系")
     @PostMapping(value = "saveRoleMenu")
     public ActionMessage saveRoleMenuMapAction(@RequestParam String roleCode, @RequestParam List<String> menuIds) {
-        QueryWrapper<RoleResource> removeWrapper = new QueryWrapper<>();
+        QueryWrapper<RoleMenu> removeWrapper = new QueryWrapper<>();
         removeWrapper.eq("role_id", roleCode);
-        roleResourceService.remove(removeWrapper);
-        ArrayList<RoleResource> roleResources = new ArrayList<>();
+        roleMenuService.remove(removeWrapper);
+        ArrayList<RoleMenu> roleMenus = new ArrayList<>();
         for (String menuId : menuIds) {
-            RoleResource roleResource = new RoleResource();
-            roleResource.setMenuCode(menuId);
-            roleResource.setRoleCode(roleCode);
-            roleResources.add(roleResource);
+            RoleMenu roleMenu = new RoleMenu();
+            roleMenu.setMenuCode(menuId);
+            roleMenu.setRoleCode(roleCode);
+            roleMenus.add(roleMenu);
         }
-        return ActionMessage.success().data(roleResourceService.saveBatch(roleResources));
+        return ActionMessage.success().data(roleMenuService.saveBatch(roleMenus));
     }
 
     @Operation(summary = "根据角色Id,查询对应角色菜单url集合")
@@ -49,7 +53,7 @@ public class RoleMenuAction {
         if (!list.contains(type)) {
             throw LogicException.errorMessage(ErrorMessage.REQ_PARAM_ERROR);
         }
-        return ActionMessage.success().data(roleResourceService.selectRoleMenu(roleCode, type));
+        return ActionMessage.success().data(roleMenuService.selectRoleMenu(roleCode, type));
     }
 
 

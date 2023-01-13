@@ -28,7 +28,7 @@ public class SwaggerProvider {
         this.routeLocator = routeLocator;
     }
 
-    @Scheduled(fixedDelay = 5)
+    @Scheduled(fixedDelay = 60 * 1000)
     public void apis() {
         // 获取所有可用的服务地址: host
         List<RouteDefinition> definitions = routeLocator.getRouteDefinitions().collectList().block();

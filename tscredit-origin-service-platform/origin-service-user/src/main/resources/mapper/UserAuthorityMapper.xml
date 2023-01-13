@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tscredit.origin.user.mapper.UserAuthorityMapper">
+<mapper namespace="com.tscredit.origin.user.dao.UserAuthorityMapper">
 
     <!-- 获取指定用户的全部权限 -->
     <select id="userAuthority" resultType="java.util.Map">

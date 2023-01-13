@@ -3,27 +3,23 @@ package com.tscredit.origin.user.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.tscredit.origin.user.entity.UserInfo;
-import com.tscredit.origin.user.entity.dao.User;
-import com.tscredit.origin.user.entity.dto.CreateUserDTO;
-import com.tscredit.origin.user.entity.dto.QueryUserDTO;
-import com.tscredit.origin.user.entity.dto.UpdateUserDTO;
-
-import java.util.List;
+import com.tscredit.origin.user.entity.User;
 
 
 public interface UserService extends IService<User> {
 
-    boolean createUser(CreateUserDTO user);
+    // 根据用户名称获取用户
+    User getUserByName(String loginName, String id);
 
-    boolean updateUser(UpdateUserDTO updateUserDTO);
+    /**
+     * 分页查询
+     */
+    Object pageList(Page<User> page, User user);
 
-    boolean batchDeleteUser(List<Long> userIds);
 
-    User getUserByLoginInfo(User user);
+    void saveWxUserInfo(String openid, String userInfo);
 
-    Page<UserInfo> pageList(Page<UserInfo> page, QueryUserDTO user);
+    User getUserByOpenId(String openId, String id);
 
-    UserInfo queryUserInfo(QueryUserDTO queryUserDTO);
-
+    public User loadUserByUsername(String username);
 }

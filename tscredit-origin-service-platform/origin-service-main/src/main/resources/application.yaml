@@ -34,6 +34,10 @@ spring:
       retry:
         # 该参数用来开启或关闭重试机制，默认是开启
         enabled: false
+  jta:
+    atomikos:
+      datasource:
+        xa-data-source-class-name:
 management:
   endpoints:
     web:

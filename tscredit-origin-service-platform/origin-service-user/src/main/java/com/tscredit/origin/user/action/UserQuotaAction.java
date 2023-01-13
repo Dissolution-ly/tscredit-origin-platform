@@ -7,7 +7,7 @@ import com.aurora.base.exception.LogicException;
 import com.aurora.boot.validataed.Flag;
 import com.aurora.redis.config.RedisUtil;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.tscredit.origin.user.constant.RedisConstants;
+import com.tscredit.origin.user.config.Constants;
 import com.tscredit.origin.user.entity.UserQuota;
 import com.tscredit.origin.user.service.UserQuotaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,11 +17,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
-@Tag(name = "用户额度管理", description = "UserQuotaAction")
+/**
+ * @author lixuanyu
+ * @since 2021-08-12
+ */
+@Tag(name ="用户额度管理", description = "UserQuotaAction")
 @RestController
 @RequestMapping("/userQuota")
 public class UserQuotaAction {
@@ -69,13 +72,13 @@ public class UserQuotaAction {
         // 检查要修改的额度内容是否合法
         List<String> quotaIds = userQuotaService.getQuotaIds();
         for (UserQuota userQuota : data) {
-            if (!quotaIds.contains(userQuota.getQuotaId())) {
+            if(!quotaIds.contains(userQuota.getQuotaId())){
                 throw LogicException.errorMessage(ErrorMessage.REQ_PARAM_ERROR);
             }
         }
 
         // 查询 redis 中该用户的 额度信息
-        Map<Object, Object> quota = redisUtil.hmget(RedisConstants.getQuotaRedisKey(userId));
+        Map<Object, Object> quota = redisUtil.hmget(Constants.QUOAT_PREFIX +userId);
         for (UserQuota userQuota : data) {
             // 禁止用户修改 已使用 额度
             userQuota.setQuotaUse(null);
@@ -87,8 +90,8 @@ public class UserQuotaAction {
                     // 计算变更数，对数据进行自增或自减
                     int i = userQuota.getQuotaTotal() - oldTotal;
                     if (i != 0) {
-                        redisUtil.hincr(RedisConstants.getQuotaRedisKey(userId), userQuota.getQuotaId() + "total", i);
-                        redisUtil.hincr(RedisConstants.getQuotaRedisKey(userId), userQuota.getQuotaId(), i);
+                        redisUtil.hincr(Constants.QUOAT_PREFIX +userId, userQuota.getQuotaId() + "total", i);
+                        redisUtil.hincr(Constants.QUOAT_PREFIX +userId, userQuota.getQuotaId(), i);
                     }
                 } catch (Exception ignore) {
                     // 此处不应该捕获到异常！！！ newTotal 为前端传过来的应该不会错，oldTotal 也应该在存储 redis时同步存储！

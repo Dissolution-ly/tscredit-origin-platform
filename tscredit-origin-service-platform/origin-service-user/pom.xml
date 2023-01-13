@@ -12,4 +12,5 @@
 
     <artifactId>origin-service-user</artifactId>
     <name>${project.artifactId}</name>
+
 </project>

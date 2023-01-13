@@ -6,18 +6,22 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tscredit.origin.user.mapper.UserAuthorityMapper;
+import com.tscredit.origin.user.config.Constants;
+import com.tscredit.origin.user.dao.UserAuthorityMapper;
 import com.tscredit.origin.user.entity.UserAuthority;
 import com.tscredit.origin.user.service.UserAuthorityService;
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
+/**
+ * @author lixuanyu
+ * @since 2021-08-16
+ */
 @Service
 public class UserAuthorityServiceImpl extends ServiceImpl<UserAuthorityMapper, UserAuthority> implements UserAuthorityService {
 
@@ -31,7 +35,9 @@ public class UserAuthorityServiceImpl extends ServiceImpl<UserAuthorityMapper, U
 
     public QueryWrapper<UserAuthority> getWrapper(UserAuthority userAuthority) {
         QueryWrapper<UserAuthority> wrapper = new QueryWrapper<>();
-        if (userAuthority == null) return null;
+        if (userAuthority == null) {
+            return null;
+        }
 
         //用户Id
         if (StringUtils.isNotBlank(userAuthority.getUserId())) {
@@ -58,7 +64,7 @@ public class UserAuthorityServiceImpl extends ServiceImpl<UserAuthorityMapper, U
 
     @Override
     public Map<Object, Object> userAuthority(String userId) {
-        String rediskey = "authority:" + userId;
+        String rediskey = Constants.AUTHORITY_PREFIX + userId;
 
         Map<Object, Object> hmget = redisUtil.hmget(rediskey);
         // redis 中 获取不到，则查询数据库
@@ -87,7 +93,7 @@ public class UserAuthorityServiceImpl extends ServiceImpl<UserAuthorityMapper, U
         boolean dbRemove = super.remove(wrapper);
         // 删除 redis 数据
         for (String userId : userIds) {
-            String rediskey = "authority:" + userId;
+            String rediskey = Constants.AUTHORITY_PREFIX + userId;
             redisUtil.del(rediskey);
         }
         return dbRemove;
@@ -99,8 +105,11 @@ public class UserAuthorityServiceImpl extends ServiceImpl<UserAuthorityMapper, U
         Map<Object, Object> data = userAuthority(userId);
         String authority = MapUtils.getString(data, authorityId);
         Map<String, T> result = new HashMap<>();
-        if (StringUtils.isNotBlank(authority)) {
-            result = JsonUtils.convertJson2ObjectLogicException(authority, Map.class);
+        if(StringUtils.isNotBlank(authority)){
+            try {
+                result = JsonUtils.convertJson2Object(authority, Map.class);
+            } catch (IOException ignore) {
+            }
         }
         return result;
     }

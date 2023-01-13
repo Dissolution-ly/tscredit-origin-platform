@@ -22,7 +22,10 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Map;
 
-
+/**
+ * @author liuweiwei
+ * @since 2017-05-27 14:50
+ */
 public class HttpUtils {
     /**
      * 日志记录

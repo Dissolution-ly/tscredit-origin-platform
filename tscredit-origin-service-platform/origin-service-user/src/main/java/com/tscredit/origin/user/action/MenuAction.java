@@ -2,22 +2,20 @@ package com.tscredit.origin.user.action;
 
 
 import com.aurora.base.entity.response.ActionMessage;
-import com.tscredit.origin.user.entity.dao.Resource;
-import com.tscredit.origin.user.service.ResourceService;
+import com.tscredit.origin.user.entity.User;
+import com.tscredit.origin.user.service.MenuService;
 import com.tscredit.origin.user.service.UserService;
-import com.tscredit.origin.user.utils.JwtUtil;
+import com.tscredit.origin.user.utils.IPUtil;
 import com.tscredit.origin.user.utils.TreeUtils;
+import com.tscredit.origin.user.entity.Menu;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -26,16 +24,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-@Tag(name = "菜单管理", description = "MenuAction")
+/**
+ * @author lixuanyu
+ * @since 2021-08-11
+ */
+
+@Tag(name ="菜单管理", description = "MenuAction")
 @RestController
+
 @RequestMapping("/menu")
 public class MenuAction {
 
-    private final ResourceService resourceService;
+    private final MenuService menuService;
     private final UserService userService;
 
-    public MenuAction(ResourceService resourceService, UserService userService) {
-        this.resourceService = resourceService;
+    public MenuAction(MenuService menuService, UserService userService) {
+        this.menuService = menuService;
         this.userService = userService;
     }
 
@@ -45,7 +49,7 @@ public class MenuAction {
     })
     @PostMapping("/info")
     public ActionMessage info(String id) {
-        return ActionMessage.success().data(resourceService.getById(id));
+        return ActionMessage.success().data(menuService.getById(id));
     }
 
 
@@ -54,8 +58,8 @@ public class MenuAction {
             @Parameter(name = "id", description = "id"),
     })
     @PostMapping("/saveOrUpdate")
-    public ActionMessage update(Resource resource) {
-        return ActionMessage.success().data(resourceService.saveOrUpdate(resource));
+    public ActionMessage update(Menu menu) {
+        return ActionMessage.success().data(menuService.saveOrUpdate(menu));
     }
 
 
@@ -65,7 +69,7 @@ public class MenuAction {
     })
     @PostMapping("/delete")
     public ActionMessage delete(@RequestParam List<String> ids) {
-        return ActionMessage.success().data(resourceService.removeByIds(ids));
+        return ActionMessage.success().data(menuService.removeByIds(ids));
     }
 
 
@@ -76,7 +80,7 @@ public class MenuAction {
         if (StringUtils.isBlank(name)) {
             name = "";
         }
-        List<Map<String, Object>> result = resourceService.getListMap(name);
+        List<Map<String, Object>> result = menuService.getListMap(name);
         List<String> idList = result.stream().map(map -> MapUtils.getString(map, "id")).collect(Collectors.toList());
         if (CollectionUtils.isNotEmpty(result)) {
             result = TreeUtils.buildTree(result, new TreeUtils.FindChild<Map<String, Object>>() {
@@ -87,7 +91,6 @@ public class MenuAction {
                     }
                     return null;
                 }
-
                 @Override
                 public List<Map<String, Object>> findChildren(Map<String, Object> rootMap, List<Map<String, Object>> list) {
                     List<Map<String, Object>> children = new ArrayList<>();
@@ -116,17 +119,8 @@ public class MenuAction {
 
     @Operation(summary = "获取指定用户拥有的菜单")
     @PostMapping(value = "/getUserMenu")
-    public ActionMessage getUserMenu(HttpServletRequest request, String userId) {
-        String roleCode = null;
-        if (StringUtils.isEmpty(userId)) {
-            Map<String, Object> user = JwtUtil.token(request);
-            roleCode = MapUtils.getString(user, "roleCode");
-        } else {
-//            TODO roleCode
-//            User user = userService.getById(userId);
-//            roleCode ;
-        }
-        return ActionMessage.success().data(resourceService.getUserMenu(roleCode));
+    public ActionMessage getUserMenu(String roleCode) {
+        return ActionMessage.success().data(menuService.getUserMenu(roleCode));
     }
 
 

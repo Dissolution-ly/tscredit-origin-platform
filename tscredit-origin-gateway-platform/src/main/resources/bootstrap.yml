@@ -21,5 +21,7 @@ spring:
           - dataId: origin_common.yaml
             group: ORIGIN_GROUP
             refresh: false
-          - dataId: common.yaml
+          - dataId: origin_refresh.yaml
+            group: ORIGIN_GROUP
+            refresh: true
 

@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@Api(tags = {"码表查询"}, value = "CodeTableAction")
+@Tag(name ="码表查询"}, value = "CodeTableAction")
 @RestController
 @RequestMapping("/codeTable")
 public class CodeTableAction {

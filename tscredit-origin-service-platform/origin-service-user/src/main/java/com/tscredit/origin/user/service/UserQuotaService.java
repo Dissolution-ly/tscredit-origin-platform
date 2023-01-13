@@ -7,7 +7,10 @@ import com.tscredit.origin.user.entity.UserQuota;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * @author lixuanyu
+ * @since 2021-08-12
+ */
 public interface UserQuotaService extends IService<UserQuota> {
 
     Page<UserQuota> pageList(Page<UserQuota> page, UserQuota userQuota);

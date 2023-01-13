@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
-@Tag(name = "用户管理", description = "UserQuotaAction")
+/**
+ * @author lixuanyu
+ * @since 2021-08-12
+ */
+@Tag(name ="用户管理", description = "UserQuotaAction")
 @RestController
 @RequestMapping("/userAuthortiy")
 public class UserAuthorityAction {
@@ -32,13 +37,13 @@ public class UserAuthorityAction {
 
     @Operation(summary = "权限设置-获取")
     @PostMapping("/allAuthority")
-    public ActionMessage allAuthority(@RequestParam String userId) {
+    public ActionMessage allAuthority(@RequestParam String userId) throws IOException {
         Map<Object, Object> data = userAuthorityService.userAuthority(userId);
 
         // 处理格式
         for (Map.Entry<Object, Object> map : data.entrySet()) {
             // 每个 value 从 Map 转换为 List [{"name":"","value":""}]
-            Map<String, Object> temp = JsonUtils.convertJson2ObjectLogicException(map.getValue().toString(), Map.class);
+            Map<String, Object> temp = JsonUtils.convertJson2Object(map.getValue().toString(), Map.class);
             List<Map<String, Object>> result = new ArrayList<>();
             for (Map.Entry<String, Object> entry : temp.entrySet()) {
                 Map<String, Object> tempMap = new HashMap<>();

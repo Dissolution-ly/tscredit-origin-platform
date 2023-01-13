@@ -9,11 +9,14 @@ import lombok.ToString;
 
 import java.io.Serializable;
 
-
+/**
+ * @author lixuanyu
+ * @since 2021-08-12
+ */
 @TableName("urm_user_quota")
 @Data
 @ToString
-@Schema(name = "UserQuota对象", description = "用户-额度")
+@Schema(name ="UserQuota对象", description="用户-额度")
 public class UserQuota implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -21,15 +24,15 @@ public class UserQuota implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private String id;
 
-    @Schema(name = "用户/角色 id")
+    @Schema(name  = "用户/角色 id")
     private String userId;
 
-    @Schema(name = "额度id")
+    @Schema(name  = "额度id")
     private String quotaId;
 
-    @Schema(name = "总额度")
+    @Schema(name  = "总额度")
     private Integer quotaTotal;
 
-    @Schema(name = "已用额度")
+    @Schema(name  = "已用额度")
     private Integer quotaUse;
 }

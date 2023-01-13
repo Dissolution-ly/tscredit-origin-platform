@@ -1,28 +1,30 @@
 package com.tscredit.origin.user.service.impl;
 
 import com.aurora.base.constant.ErrorMessage;
+import com.aurora.base.enums.ResultCodeEnum;
 import com.aurora.base.exception.LogicException;
 import com.aurora.redis.config.RedisUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
-import com.tscredit.origin.user.constant.RedisConstants;
-import com.tscredit.origin.user.mapper.UserQuotaMapper;
+import com.tscredit.origin.user.config.Constants;
+import com.tscredit.origin.user.dao.UserQuotaMapper;
 import com.tscredit.origin.user.entity.UserQuota;
 import com.tscredit.origin.user.service.UserQuotaService;
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * @author lixuanyu
+ * @since 2021-08-12
+ */
 @Service
 public class UserQuotaServiceImpl extends ServiceImpl<UserQuotaMapper, UserQuota> implements UserQuotaService {
 
@@ -74,15 +76,15 @@ public class UserQuotaServiceImpl extends ServiceImpl<UserQuotaMapper, UserQuota
     @Override
     public List<Map<String, Object>> getByUserId(String userId) {
         // 同步对应用户 redis数据 到 数据库
-        this.userOver(Lists.newArrayList(RedisConstants.getQuotaRedisKey(userId)));
+        this.userOver(Lists.newArrayList(Constants.QUOAT_PREFIX + userId));
         // 查询 用户额度
         return userQuotaMapper.getByUserId(userId);
     }
 
     @Override
     public Map<String, Object> getRedisQuota(String userId, String quotaId) {
-        Integer surplusQuota = (Integer) redisUtil.hget(RedisConstants.getQuotaRedisKey(userId), quotaId);
-        Integer totalQuota = (Integer) redisUtil.hget(RedisConstants.getQuotaRedisKey(userId), quotaId + "@total");
+        Integer surplusQuota = (Integer) redisUtil.hget(Constants.QUOAT_PREFIX + userId, quotaId);
+        Integer totalQuota = (Integer) redisUtil.hget(Constants.QUOAT_PREFIX + userId, quotaId + "@total");
         if (surplusQuota == null) {
             // 数据库 获取总额度 和 剩余额度
             UserQuota userQuota = null;
@@ -98,16 +100,16 @@ public class UserQuotaServiceImpl extends ServiceImpl<UserQuotaMapper, UserQuota
                 }
             }
             if (userQuota == null) {
-                throw LogicException.errorMessage("6379", "要获取的额度数据不存在");
+                throw LogicException.errorMessage(ResultCodeEnum.USER_QUOTA_NULL);
             }
 
             // 将信息保存到 redis TODO 需要原子操作
             totalQuota = userQuota.getQuotaTotal() == null ? 0 : userQuota.getQuotaTotal();
             int useQuota = userQuota.getQuotaUse() == null ? 0 : userQuota.getQuotaUse();
             surplusQuota = totalQuota - useQuota;
-            redisUtil.hset(RedisConstants.getQuotaRedisKey(userId), quotaId, surplusQuota);
-            redisUtil.hset(RedisConstants.getQuotaRedisKey(userId), quotaId + "@total", totalQuota);
-            redisUtil.hset(RedisConstants.getQuotaRedisKey(userId), quotaId + "@id", userQuota.getId());
+            redisUtil.hset(Constants.QUOAT_PREFIX + userId, quotaId, surplusQuota);
+            redisUtil.hset(Constants.QUOAT_PREFIX + userId, quotaId + "@total", totalQuota);
+            redisUtil.hset(Constants.QUOAT_PREFIX + userId, quotaId + "@id", userQuota.getId());
         }
 
         Map<String, Object> result = new HashMap<>(8);
@@ -122,7 +124,7 @@ public class UserQuotaServiceImpl extends ServiceImpl<UserQuotaMapper, UserQuota
         Integer surplusQuota = MapUtils.getInteger(redisQuota, "surplusQuota");
         Integer totalQuota = MapUtils.getInteger(redisQuota, "totalQuota");
         if (totalQuota != -1 && surplusQuota < quota) {
-            throw LogicException.errorMessage(ErrorMessage.USER_QUOTA);
+            throw LogicException.errorMessage(ResultCodeEnum.USER_QUOTA);
         }
         return surplusQuota;
     }
@@ -140,12 +142,12 @@ public class UserQuotaServiceImpl extends ServiceImpl<UserQuotaMapper, UserQuota
 
     @Override
     public void deductQuota(String userId, String quotaId, Integer num) {
-        String key = RedisConstants.getQuotaRedisKey(userId);
+        String key = Constants.QUOAT_PREFIX + userId;
 
         // 获取并更新额度
         int count = 1;
         while (true) {
-            long i = redisUtil.executeLua("redis/updateUserOver.lua", Lists.newArrayList(key, quotaId, "QUOTA:changeContent"), num);
+            long i = redisUtil.executeLua("redis/updateUserOver.lua", Lists.newArrayList(key, quotaId, Constants.QUOAT_PREFIX + "changeContent"), num);
             if (i == 0) {
                 // 成功则跳出循环
                 break;
@@ -200,7 +202,7 @@ public class UserQuotaServiceImpl extends ServiceImpl<UserQuotaMapper, UserQuota
     public void userOver(List<String> keys) {
         try {
             for (String key : keys) {
-                String userId = key.replace("quota:", "");
+                String userId = key.replace(Constants.QUOAT_PREFIX, "");
                 Map<Object, Object> quota = redisUtil.hmget(key);
                 // 根据类型分组
                 Map<String, List<Object>> total = quota.keySet().stream()
@@ -218,7 +220,7 @@ public class UserQuotaServiceImpl extends ServiceImpl<UserQuotaMapper, UserQuota
                     userQuota.setQuotaTotal(totalQuota);
                     this.saveOrUpdate(userQuota);
                     // redis 第一次获取该值，数据库中还没有该条数据(上一句执行的新增操作)，则将数据库 id 回填到 redis
-                    if(StringUtils.isEmpty(userQuotaId)){
+                    if (StringUtils.isEmpty(userQuotaId)) {
                         redisUtil.hset(key, quotaId + "@id", userQuota.getId());
                     }
                 }

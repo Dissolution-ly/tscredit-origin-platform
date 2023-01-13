@@ -2,9 +2,9 @@ package com.tscredit.origin.user.task;
 
 import com.aurora.redis.config.RedisUtil;
 import com.google.common.collect.Lists;
+import com.tscredit.origin.user.config.Constants;
 import com.tscredit.origin.user.service.UserQuotaService;
 import com.tscredit.origin.user.service.UserService;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -45,7 +45,7 @@ public class UserOverTask {
     public void userOverUpdateTask() {
         synchronized (this) {
             log.info("更新数据库额度定时任务时间: " + simpleDateFormat.format(new Date()));
-            List<String> keys = redisUtil.execute(removeAll, Lists.newArrayList("API:QUOTA:changeContent"));
+            List<String> keys = redisUtil.execute(removeAll, Lists.newArrayList(Constants.QUOAT_PREFIX + "changeContent"));
             if (CollectionUtils.isNotEmpty(keys)) {
                 userQuotaService.userOver(keys);
             }
@@ -71,9 +71,9 @@ public class UserOverTask {
                 // Object execute = redisUtil.execute(resetZero, userIds, quotaIds);
                 for (String userId : userIds) {
                     for (String quotaId : quotaIds) {
-                        Integer max = (Integer) redisUtil.hget("quota:" + userId, quotaId + "@total");
+                        Integer max = (Integer) redisUtil.hget(Constants.QUOAT_PREFIX + userId, quotaId + "@total");
                         if (max != null) {
-                            redisUtil.hset("quota:" + userId, quotaId, max);
+                            redisUtil.hset(Constants.QUOAT_PREFIX + userId, quotaId, max);
                         }
                     }
                 }

@@ -108,3 +108,4 @@ springdoc:
 #    enabled: false
 #    path: /user/v3/api-docs
 #    - "/error*/**"
+# 开启日志 方便调试

@@ -3,7 +3,7 @@ package com.tscredit.origin.main.action;
 
 import com.aurora.base.entity.response.ActionMessage;
 import com.aurora.redis.config.RedisUtil;
-import com.tscredit.service.user.client.feign.IUserFeign;
+import com.tscredit.service.client.user.feign.UserFeign;
 import com.tscredit.tsinterfaces.access.HttpQuery;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -33,21 +33,21 @@ public class CommonAction {
 
     private final HttpQuery httpQuery;
     private final RedisUtil redisUtil;
-    private final IUserFeign userFeign;
+    private final UserFeign userFeign;
 
-    public CommonAction(HttpQuery httpQuery, RedisUtil redisUtil, IUserFeign userFeign) {
+    public CommonAction(HttpQuery httpQuery, RedisUtil redisUtil, UserFeign userFeign) {
         this.httpQuery = httpQuery;
         this.redisUtil = redisUtil;
         this.userFeign = userFeign;
     }
 
-    @Operation(summary ="CCCC")
+    @Operation(summary = "CCCC")
     @PostMapping(value = "/tttt")
     public ActionMessage entSearch() {
-        return ActionMessage.success().data(userFeign.queryUserByOpenId("3"));
+        return ActionMessage.success().data(userFeign.getByName("root"));
     }
 
-    @Operation(summary ="企业名称检索")
+    @Operation(summary = "企业名称检索")
     @Parameters({
             @Parameter(name = "entName", description = "企业名称"),
             @Parameter(name = "type", description = "0.企业名称检索"),

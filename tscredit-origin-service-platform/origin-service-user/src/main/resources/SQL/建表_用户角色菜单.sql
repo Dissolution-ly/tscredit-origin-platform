@@ -19,7 +19,7 @@ CREATE TABLE `urm_user`
     `fu_userstatus`    varchar(4) CHARACTER SET utf8 COLLATE utf8_general_ci   NULL     DEFAULT '1' COMMENT '账号状态(0停用,1启用)',
     `fu_status`        varchar(4) CHARACTER SET utf8 COLLATE utf8_general_ci   NOT NULL DEFAULT '1' COMMENT '是否可用(逻辑删除，0不可用，1可用)',
     `fu_idt`           datetime                                                NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
-    `fu_udt`           datetime                                                NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新日期',
+    `fu_udt`           datetime                                                NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新日期',
     `fu_open_id`       varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL     DEFAULT NULL COMMENT '微信openID',
     PRIMARY KEY (`fu_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -30,7 +30,7 @@ CREATE TABLE `urm_user`
 -- 新增用户 root root@1
 INSERT INTO `urm_user` (`fu_loginname`, `fu_password`, `fu_district_code`, `role_id`, `fu_opentime`, `fu_expiredtime`,
                         `fu_userstatus`, `fu_status`)
-VALUES ('root', '{noop}root@1', '110000', '2', '2022-04-19 16:37:34', '2099-12-31 16:37:34', '1', '1');
+VALUES ('root', '{noop}root@1', '110000', '1', '2022-04-19 16:37:34', '2099-12-31 16:37:34', '1', '1');
 
 -- ----------------------------
 -- 微信用户信息

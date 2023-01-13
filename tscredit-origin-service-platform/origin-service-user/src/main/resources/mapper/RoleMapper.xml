@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tscredit.origin.user.mapper.RoleMapper">
+<mapper namespace="com.tscredit.origin.user.dao.RoleMapper">
 
+<!--    <select id="loadResourceDefine" resultType="java.util.Map">-->
+<!--        SELECT urm_menu.authority               AS url,-->
+<!--               GROUP_CONCAT(urm_role.role_code) AS auth-->
+<!--        FROM (SELECT * from urm_menu WHERE urm_menu.`status` = 1) urm_menu-->
+<!--                 LEFT JOIN urm_role_menu ON urm_role_menu.menu_id = urm_menu.id-->
+<!--                 left JOIN (SELECT * from urm_role WHERE urm_role.`status` = 1) urm_role-->
+<!--                           ON urm_role.id = urm_role_menu.role_id-->
+<!--        where urm_menu.authority is not null and urm_menu.authority != ''-->
+<!--        GROUP BY urm_menu.authority-->
+<!--    </select>-->
     <select id="loadResourceDefine" resultType="java.util.Map">
-        SELECT urm_menu.authority               AS url,
-               GROUP_CONCAT(urm_role.role_code) AS auth
-        FROM (SELECT * from urm_menu WHERE urm_menu.`status` = 1) urm_menu
-                 LEFT JOIN urm_role_menu ON urm_role_menu.menu_id = urm_menu.id
-                 left JOIN (SELECT * from urm_role WHERE urm_role.`status` = 1) urm_role
-                           ON urm_role.id = urm_role_menu.role_id
-        GROUP BY urm_menu.authority
+        SELECT r.role_code               AS roleCode,
+               GROUP_CONCAT(m.authority) AS authority
+        FROM urm_role r
+                 LEFT JOIN urm_role_menu rm ON r.id = rm.role_id
+                 LEFT JOIN urm_menu m ON m.id = rm.menu_id
+        WHERE r.`status` = 1
+        <if test="roleId != null and roleId != ''">
+            AND r.id = #{roleId}
+        </if>
+        GROUP BY r.role_code
+
+    </select>
+
+    <select id="getUserRoleByRoleId" resultType="java.util.Map">
+        SELECT urm_role.id              AS roleId,
+               urm_role.role_name       AS roleName,
+               GROUP_CONCAT(fu_id)      AS userId,
+               GROUP_CONCAT(fu_cnnamen) AS userCnname
+        FROM (SELECT * from urm_user WHERE fu_status = '1') urm_user
+                 left JOIN (SELECT * from urm_role WHERE `status` = '1') urm_role
+                           on urm_user.role_id = urm_role.id
+        WHERE urm_role.id in (<foreach collection="ids" item="id" index="index" separator=",">#{id}</foreach>)
+        GROUP BY urm_role.id
     </select>
 </mapper>
